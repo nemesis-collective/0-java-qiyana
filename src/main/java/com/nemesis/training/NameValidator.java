@@ -4,12 +4,9 @@ public class NameValidator {
   public static boolean isValidName(String name) {
     if (name.length() < 8 || name.length() > 25) {
       return false;
+    } else {
+      String validName = name.toLowerCase();
+      return validName.equals(name);
     }
-    for (char c : name.toCharArray()) {
-      if (!Character.isLowerCase(c)) {
-        return false;
-      }
-    }
-    return true;
   }
 }
