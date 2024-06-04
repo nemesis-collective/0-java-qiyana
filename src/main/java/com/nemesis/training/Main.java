@@ -3,18 +3,21 @@ package com.nemesis.training;
 public class Main {
   public static void main(String[] args) {
     try {
-      User user = new User(-1L, args[0]);
-      if (!NameValidator.isValidName(user.name)) {
-        System.err.println(
-            "Please, write a name with 8 to 25 characters without capital letters or symbols.");
-      } else {
-        UsersStore usersStore = new UsersStore();
-        user.id = usersStore.addUser(user);
+      String username = args[0];
+      if (!NameValidator.isValidName(username)) {
+        throw new Exception(
+                "Please, write a name with 8 to 25 characters without capital letters or symbols.");
       }
-      if (user.id != -1) System.out.println("Name added successfully with ID = " + user.id);
+      User user = new User(username);
+      UsersStore usersStore = new UsersStore();
+      user.setId(usersStore.addUser(user));
+
+      if (user.getId() != -1) System.out.println("Name added successfully with ID = " + user.getId());
       else System.err.println("Failed to save name to database.");
     } catch (ArrayIndexOutOfBoundsException e) {
       System.out.println("No names were written.");
+    } catch (Exception e) {
+        throw new RuntimeException(e);
     }
   }
 }
