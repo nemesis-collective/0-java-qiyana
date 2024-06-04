@@ -7,16 +7,18 @@ import java.util.Properties;
 import static jdk.internal.org.jline.utils.Log.debug;
 
 public class UsersStore {
-  static Properties properties = new Properties();
+
+  String url;
+  String username;
+  String password;
 
   UsersStore() {
     try {
-      properties = getProperties("application.properties");
-      String JDBC_URL = properties.getProperty("db.JDBC_URL");
-      String USERNAME = properties.getProperty("db.USERNAME");
-      String PASSWORD = properties.getProperty("db.PASSWORD");
-
-      try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+      Properties properties = GetProperties.getProperties("application.properties");
+      this.url = properties.getProperty("db.JDBC_URL");
+      this.username = properties.getProperty("db.USERNAME");
+      this.password = properties.getProperty("db.PASSWORD");
+      try (Connection connection = DriverManager.getConnection(url, username, password);
           Statement stmt = connection.createStatement()) {
         String createTableSQL =
             "CREATE TABLE IF NOT EXISTS USERS ("
@@ -25,24 +27,26 @@ public class UsersStore {
         stmt.execute(createTableSQL);
       }
     } catch (SQLException e) {
+      System.out.println(
+          "An error occurred while creating the table in the database." + e.getMessage());
       e.printStackTrace();
     }
   }
 
   public Long addUser(User user) {
     String insertSQL = "INSERT INTO USERS (name) VALUES (?)";
-    long generatedId = -1;
+    long generatedId = 0;
     try {
-      properties = getProperties("application.properties");
-      String JDBC_URL = properties.getProperty("db.JDBC_URL");
-      String USERNAME = properties.getProperty("db.USERNAME");
-      String PASSWORD = properties.getProperty("db.PASSWORD");
+      Properties properties = GetProperties.getProperties("application.properties");
+      this.url = properties.getProperty("db.JDBC_URL");
+      this.username = properties.getProperty("db.USERNAME");
+      this.password = properties.getProperty("db.PASSWORD");
 
-      try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+      try (Connection connection = DriverManager.getConnection(url, username, password);
           PreparedStatement preparedStatement =
               connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
 
-        preparedStatement.setString(1, user.name);
+        preparedStatement.setString(1, user.getName());
         preparedStatement.executeUpdate();
 
         try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -51,24 +55,11 @@ public class UsersStore {
           }
         }
       }
-      if (generatedId == -1) {
-        throw new Exception("An error occurred while adding the user.");
-      }
-    } catch (Exception e) {
+    } catch (SQLException e) {
+      System.out.println(
+          "An error occurred while adding the user in the database." + e.getMessage());
       e.printStackTrace();
     }
     return generatedId;
-  }
-
-  public static Properties getProperties(String propertiesName) {
-    final Properties properties = new Properties();
-    try (InputStream inputStream =
-        Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
-      properties.load(inputStream);
-    } catch (Exception e) {
-      debug("Error in fetching properties: ", e);
-      return null;
-    }
-    return properties;
   }
 }

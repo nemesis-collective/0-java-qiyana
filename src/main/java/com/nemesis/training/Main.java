@@ -6,18 +6,19 @@ public class Main {
       String username = args[0];
       if (!NameValidator.isValidName(username)) {
         throw new Exception(
-                "Please, write a name with 8 to 25 characters without capital letters or symbols.");
+            "Please, write a name with 8 to 25 characters without capital letters or symbols.");
       }
       User user = new User(username);
       UsersStore usersStore = new UsersStore();
       user.setId(usersStore.addUser(user));
 
-      if (user.getId() != -1) System.out.println("Name added successfully with ID = " + user.getId());
+      if (user.getId() != -1)
+        System.out.println("Name added successfully with ID = " + user.getId());
       else System.err.println("Failed to save name to database.");
     } catch (ArrayIndexOutOfBoundsException e) {
       System.out.println("No names were written.");
     } catch (Exception e) {
-        throw new RuntimeException(e);
+      throw new RuntimeException(e);
     }
   }
 }
