@@ -1,13 +1,12 @@
 package com.nemesis.training;
 
 import java.io.InputStream;
-import java.util.Properties;
 
 import static jdk.internal.org.jline.utils.Log.debug;
 
-public class GetProperties {
-  public static Properties getProperties(String propertiesName) {
-    final Properties properties = new Properties();
+public class Properties {
+  public static java.util.Properties getProperties(String propertiesName) {
+    final java.util.Properties properties = new java.util.Properties();
     try (InputStream inputStream =
         Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
       properties.load(inputStream);
