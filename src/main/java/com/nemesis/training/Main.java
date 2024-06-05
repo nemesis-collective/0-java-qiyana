@@ -10,9 +10,9 @@ public class Main {
       }
       User user = new User(username);
       UsersStore usersStore = new UsersStore();
-      user.setId(usersStore.addUser(user));
+      usersStore.addUser(user);
 
-      if (user.getId() != -1)
+      if (user.getId() != null)
         System.out.println("Name added successfully with ID = " + user.getId());
       else System.err.println("Failed to save name to database.");
     } catch (ArrayIndexOutOfBoundsException e) {

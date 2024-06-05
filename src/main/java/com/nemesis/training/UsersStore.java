@@ -1,10 +1,7 @@
 package com.nemesis.training;
 
-import java.io.*;
 import java.sql.*;
 import java.util.Properties;
-
-import static jdk.internal.org.jline.utils.Log.debug;
 
 public class UsersStore {
 
@@ -14,7 +11,7 @@ public class UsersStore {
 
   UsersStore() {
     try {
-      Properties properties = GetProperties.getProperties("application.properties");
+      Properties properties = DBProperties.getProperties("application.properties");
       this.url = properties.getProperty("db.JDBC_URL");
       this.username = properties.getProperty("db.USERNAME");
       this.password = properties.getProperty("db.PASSWORD");
@@ -33,11 +30,12 @@ public class UsersStore {
     }
   }
 
-  public Long addUser(User user) {
-    String insertSQL = "INSERT INTO USERS (name) VALUES (?)";
-    long generatedId = 0;
+  public void addUser(User user) {
+    String insertSQL;
+
     try {
-      Properties properties = GetProperties.getProperties("application.properties");
+      Properties properties = DBProperties.getProperties("application.properties");
+      insertSQL = "INSERT INTO USERS (name) VALUES (?)";
       this.url = properties.getProperty("db.JDBC_URL");
       this.username = properties.getProperty("db.USERNAME");
       this.password = properties.getProperty("db.PASSWORD");
@@ -48,11 +46,12 @@ public class UsersStore {
 
         preparedStatement.setString(1, user.getName());
         preparedStatement.executeUpdate();
-
+        long generatedId = 0;
         try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
           if (generatedKeys.next()) {
             generatedId = generatedKeys.getInt(1);
           }
+          user.setId(generatedId);
         }
       }
     } catch (SQLException e) {
@@ -60,6 +59,5 @@ public class UsersStore {
           "An error occurred while adding the user in the database." + e.getMessage());
       e.printStackTrace();
     }
-    return generatedId;
   }
 }
