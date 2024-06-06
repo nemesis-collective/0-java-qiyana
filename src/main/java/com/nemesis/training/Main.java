@@ -8,13 +8,10 @@ public class Main {
         throw new Exception(
             "Please, write a name with 8 to 25 characters without capital letters or symbols.");
       }
-      User user = new User(username);
-      UsersStore usersStore = new UsersStore();
-      usersStore.addUser(user);
 
-      if (user.getId() != null)
-        System.out.println("Name added successfully with ID = " + user.getId());
-      else System.err.println("Failed to save name to database.");
+      UsersStore usersStore = new UsersStore();
+      usersStore.addUser(username);
+
     } catch (ArrayIndexOutOfBoundsException e) {
       System.out.println("No names were written.");
     } catch (Exception e) {
