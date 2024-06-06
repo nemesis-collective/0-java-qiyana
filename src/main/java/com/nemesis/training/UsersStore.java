@@ -30,9 +30,8 @@ public class UsersStore {
     }
   }
 
-  public void addUser(User user) {
+  public void addUser(String name) {
     String insertSQL;
-
     try {
       Properties properties = DBProperties.getProperties("application.properties");
       insertSQL = "INSERT INTO USERS (name) VALUES (?)";
@@ -43,15 +42,14 @@ public class UsersStore {
       try (Connection connection = DriverManager.getConnection(url, username, password);
           PreparedStatement preparedStatement =
               connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
-
-        preparedStatement.setString(1, user.getName());
+        preparedStatement.setString(1, name);
         preparedStatement.executeUpdate();
-        long generatedId = 0;
+        long generatedId;
         try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
           if (generatedKeys.next()) {
             generatedId = generatedKeys.getInt(1);
-          }
-          user.setId(generatedId);
+            System.out.println("Name added successfully with ID = " + generatedId);}
+        else System.err.println("Failed to save name to database.");
         }
       }
     } catch (SQLException e) {
