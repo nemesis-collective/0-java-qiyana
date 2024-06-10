@@ -11,7 +11,7 @@ public class UsersStore {
 
   UsersStore() {
     try {
-      Properties properties = DBProperties.getProperties("application.properties");
+      Properties properties = Config.getProperties("application.properties");
       this.url = properties.getProperty("db.JDBC_URL");
       this.username = properties.getProperty("db.USERNAME");
       this.password = properties.getProperty("db.PASSWORD");
@@ -33,7 +33,7 @@ public class UsersStore {
   public void addUser(String name) {
     String insertSQL;
     try {
-      Properties properties = DBProperties.getProperties("application.properties");
+      Properties properties = Config.getProperties("application.properties");
       insertSQL = "INSERT INTO USERS (name) VALUES (?)";
       this.url = properties.getProperty("db.JDBC_URL");
       this.username = properties.getProperty("db.USERNAME");
