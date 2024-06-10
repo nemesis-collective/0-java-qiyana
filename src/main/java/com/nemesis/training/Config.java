@@ -1,5 +1,6 @@
 package com.nemesis.training;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -10,8 +11,8 @@ public class Config {
     try (InputStream inputStream =
         Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
       properties.load(inputStream);
-    } catch (Exception e) {
-      System.out.println("Error in fetching properties: " + e);
+    } catch (IOException e) {
+      System.out.println("Error in fetching properties: " + e.getMessage());
       return null;
     }
     return properties;
