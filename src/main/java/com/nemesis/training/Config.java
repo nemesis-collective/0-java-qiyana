@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 
-public class DBProperties {
+public class Config {
   public static Properties getProperties(String propertiesName) {
     final Properties properties = new Properties();
     try (InputStream inputStream =
