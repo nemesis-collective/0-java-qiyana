@@ -10,6 +10,10 @@ public class Config {
     final Properties properties = new Properties();
     try (InputStream inputStream =
         Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
+      if(inputStream == null){
+        System.out.println("Property file '" + propertiesName + "' not found in the classpath");
+        return null;
+      }
       properties.load(inputStream);
     } catch (IOException e) {
       System.out.println("Error in fetching properties: " + e.getMessage());
