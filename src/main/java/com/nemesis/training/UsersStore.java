@@ -1,5 +1,6 @@
 package com.nemesis.training;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
@@ -8,10 +9,11 @@ public class UsersStore {
   String url;
   String username;
   String password;
-
+  Config config;
   UsersStore() {
     try {
-      Properties properties = Config.getProperties("application.properties");
+      this.config = new Config();
+      Properties properties = config.getProperties("application.properties");
       this.url = properties.getProperty("db.JDBC_URL");
       this.username = properties.getProperty("db.USERNAME");
       this.password = properties.getProperty("db.PASSWORD");
@@ -27,13 +29,16 @@ public class UsersStore {
       System.out.println(
           "An error occurred while creating the table in the database." + e.getMessage());
       e.printStackTrace();
+    } catch (IOException e) {
+        throw new RuntimeException(e);
     }
   }
 
   public void addUser(String name) {
     String insertSQL;
     try {
-      Properties properties = Config.getProperties("application.properties");
+      this.config = new Config();
+      Properties properties = config.getProperties("application.properties");
       insertSQL = "INSERT INTO USERS (name) VALUES (?)";
       this.url = properties.getProperty("db.JDBC_URL");
       this.username = properties.getProperty("db.USERNAME");
@@ -52,7 +57,7 @@ public class UsersStore {
         else System.err.println("Failed to save name to database.");
         }
       }
-    } catch (SQLException e) {
+    } catch (SQLException | IOException e) {
       System.out.println(
           "An error occurred while adding the user in the database." + e.getMessage());
       e.printStackTrace();
