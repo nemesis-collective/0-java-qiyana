@@ -6,7 +6,7 @@ import java.util.Properties;
 
 
 public class Config {
-  public static Properties getProperties(String propertiesName) {
+  public  Properties getProperties(String propertiesName) throws IOException{
     final Properties properties = new Properties();
     try (InputStream inputStream =
         Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
