@@ -11,13 +11,9 @@ public class Config {
     try (InputStream inputStream =
         Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
       if(inputStream == null){
-        System.out.println("Property file '" + propertiesName + "' not found in the classpath");
-        return null;
+        throw new IOException("Property file '" + propertiesName + "' was not found or could not be read.");
       }
       properties.load(inputStream);
-    } catch (IOException e) {
-      System.out.println("Error in fetching properties: " + e.getMessage());
-      return null;
     }
     return properties;
   }
