@@ -2,6 +2,9 @@ package com.nemesis.training;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 
@@ -16,5 +19,15 @@ public class Config {
       properties.load(inputStream);
     }
     return properties;
+  }
+
+  public Connection getConnection(String url, String username, String password) throws SQLException {
+    Connection connection = null;
+    try{
+      connection = DriverManager.getConnection(url, username, password);
+    }catch (SQLException e){
+      System.out.println("An error occurred while connecting to database.");
+    }
+    return connection;
   }
 }
