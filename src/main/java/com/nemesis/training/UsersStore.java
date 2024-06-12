@@ -17,7 +17,7 @@ public class UsersStore {
       this.url = properties.getProperty("db.JDBC_URL");
       this.username = properties.getProperty("db.USERNAME");
       this.password = properties.getProperty("db.PASSWORD");
-      try (Connection connection = DriverManager.getConnection(url, username, password);
+      try (Connection connection = config.getConnection(url, username, password);
           Statement stmt = connection.createStatement()) {
         String createTableSQL =
             "CREATE TABLE IF NOT EXISTS USERS ("
@@ -44,7 +44,7 @@ public class UsersStore {
       this.username = properties.getProperty("db.USERNAME");
       this.password = properties.getProperty("db.PASSWORD");
 
-      try (Connection connection = DriverManager.getConnection(url, username, password);
+      try (Connection connection = config.getConnection(url, username, password);
           PreparedStatement preparedStatement =
               connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
         preparedStatement.setString(1, name);
