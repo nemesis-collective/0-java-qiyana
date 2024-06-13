@@ -4,54 +4,40 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
-public class UsersStore {
+public class UsersStore{
 
-  String url;
-  String username;
-  String password;
-  Config config;
-  Connection connection;
-  UsersStore() {
+  Connection conn;
+  UsersStore(Connection connection) {
+    this.conn = connection;
     this.createTable();
   }
 
   public void createTable(){
     try {
-      this.config = new Config();
-      Properties properties = config.getProperties("application.properties");
-      this.url = properties.getProperty("db.JDBC_URL");
-      this.username = properties.getProperty("db.USERNAME");
-      this.password = properties.getProperty("db.PASSWORD");
-      this.connection = config.getConnection(url, username, password);
-      try (Statement stmt = connection.createStatement()) {
+      try (Statement stmt = this.conn.createStatement()) {
         String createTableSQL =
                 "CREATE TABLE IF NOT EXISTS USERS ("
                         + "id LONG AUTO_INCREMENT, "
                         + "name VARCHAR(255) NOT NULL)";
         stmt.execute(createTableSQL);
-        connection.close();
+        this.conn.close();
       }
     } catch (SQLException e) {
       System.out.println(
               "An error occurred while creating the table in the database." + e.getMessage());
       e.printStackTrace();
-    } catch (IOException e) {
-      System.out.println("An error occurred while reading the properties file.");
-    }
+    } //catch (IOException e) {
+//      System.out.println("An error occurred while reading the properties file.");
+//    }
   }
 
   public void addUser(String name) {
     String insertSQL;
     try {
-      this.config = new Config();
-      Properties properties = config.getProperties("application.properties");
       insertSQL = "INSERT INTO USERS (name) VALUES (?)";
-      this.url = properties.getProperty("db.JDBC_URL");
-      this.username = properties.getProperty("db.USERNAME");
-      this.password = properties.getProperty("db.PASSWORD");
-      this.connection = config.getConnection(url, username, password);
+
       try (PreparedStatement preparedStatement =
-                   connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+                   this.conn.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
         preparedStatement.setString(1, name);
         preparedStatement.executeUpdate();
         long generatedId;
@@ -62,7 +48,7 @@ public class UsersStore {
         else System.err.println("Failed to save name to database.");
         }
       }
-    } catch (SQLException | IOException e) {
+    } catch (SQLException /*| IOException*/ e) {
       System.out.println(
           "An error occurred while adding the user in the database." + e.getMessage());
       e.printStackTrace();

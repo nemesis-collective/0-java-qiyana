@@ -1,5 +1,8 @@
 package com.nemesis.training;
 
+import java.sql.Connection;
+import java.util.Properties;
+
 public class Main {
   public static void main(String[] args) {
     try {
@@ -8,8 +11,9 @@ public class Main {
         throw new Exception(
             "Please, write a name with 8 to 25 characters without capital letters or symbols.");
       }
-
-      UsersStore usersStore = new UsersStore();
+      Config config = new Config();
+      Connection conn = config.getConnection();
+      UsersStore usersStore = new UsersStore(conn);
       usersStore.addUser(username);
 
     } catch (ArrayIndexOutOfBoundsException e) {
