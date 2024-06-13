@@ -10,27 +10,33 @@ public class UsersStore {
   String username;
   String password;
   Config config;
+  Connection connection;
   UsersStore() {
+    this.createTable();
+  }
+
+  public void createTable(){
     try {
       this.config = new Config();
       Properties properties = config.getProperties("application.properties");
       this.url = properties.getProperty("db.JDBC_URL");
       this.username = properties.getProperty("db.USERNAME");
       this.password = properties.getProperty("db.PASSWORD");
-      try (Connection connection = config.getConnection(url, username, password);
-          Statement stmt = connection.createStatement()) {
+      this.connection = config.getConnection(url, username, password);
+      try (Statement stmt = connection.createStatement()) {
         String createTableSQL =
-            "CREATE TABLE IF NOT EXISTS USERS ("
-                + "id LONG AUTO_INCREMENT, "
-                + "name VARCHAR(255) NOT NULL)";
+                "CREATE TABLE IF NOT EXISTS USERS ("
+                        + "id LONG AUTO_INCREMENT, "
+                        + "name VARCHAR(255) NOT NULL)";
         stmt.execute(createTableSQL);
+        connection.close();
       }
     } catch (SQLException e) {
       System.out.println(
-          "An error occurred while creating the table in the database." + e.getMessage());
+              "An error occurred while creating the table in the database." + e.getMessage());
       e.printStackTrace();
     } catch (IOException e) {
-        throw new RuntimeException(e);
+      System.out.println("An error occurred while reading the properties file.");
     }
   }
 
@@ -43,10 +49,9 @@ public class UsersStore {
       this.url = properties.getProperty("db.JDBC_URL");
       this.username = properties.getProperty("db.USERNAME");
       this.password = properties.getProperty("db.PASSWORD");
-
-      try (Connection connection = config.getConnection(url, username, password);
-          PreparedStatement preparedStatement =
-              connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+      this.connection = config.getConnection(url, username, password);
+      try (PreparedStatement preparedStatement =
+                   connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
         preparedStatement.setString(1, name);
         preparedStatement.executeUpdate();
         long generatedId;
