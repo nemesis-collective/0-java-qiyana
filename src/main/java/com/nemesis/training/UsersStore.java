@@ -13,8 +13,7 @@ public class UsersStore{
   }
 
   public void createTable(){
-    try {
-      try (Statement stmt = this.conn.createStatement()) {
+    try (Statement stmt = this.conn.createStatement()) {
         String createTableSQL =
                 "CREATE TABLE IF NOT EXISTS USERS ("
                         + "id LONG AUTO_INCREMENT, "
@@ -22,13 +21,11 @@ public class UsersStore{
         stmt.execute(createTableSQL);
         this.conn.close();
       }
-    } catch (SQLException e) {
+     catch (SQLException e) {
       System.out.println(
               "An error occurred while creating the table in the database." + e.getMessage());
       e.printStackTrace();
-    } //catch (IOException e) {
-//      System.out.println("An error occurred while reading the properties file.");
-//    }
+    }
   }
 
   public void addUser(String name) {
