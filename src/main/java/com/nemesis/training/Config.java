@@ -21,8 +21,12 @@ public class Config {
     return properties;
   }
 
-  public Connection getConnection(String url, String username, String password) throws SQLException {
+  public Connection getConnection() throws SQLException, IOException {
     Connection connection = null;
+    Properties properties = this.getProperties("application.properties");
+    String url = properties.getProperty("db.JDBC_URL");
+    String username = properties.getProperty("db.USERNAME");
+    String password = properties.getProperty("db.PASSWORD");
     try{
       connection = DriverManager.getConnection(url, username, password);
     }catch (SQLException e){
