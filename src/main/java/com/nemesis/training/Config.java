@@ -17,6 +17,30 @@ public class Config {
         throw new IOException("Property file '" + propertiesName + "' was not found or could not be read.");
       }
       properties.load(inputStream);
+  private static Config config;
+  private String url;
+  private String username;
+  private String password;
+  private static Properties properties;
+
+  public static Config getConfig() {
+    if(config == null){
+      config = new Config();
+    }
+    return config;
+  }
+
+  public String getUrl() {
+    return properties.getProperty("db.JDBC_URL");
+  }
+
+  public String getUsername() {
+    return properties.getProperty("db.USERNAME");
+  }
+
+  public String getPassword() {
+    return properties.getProperty("db.PASSWORD");
+  }
     }
     return properties;
   }
