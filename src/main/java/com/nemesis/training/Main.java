@@ -11,8 +11,7 @@ public class Main {
         throw new Exception(
             "Please, write a name with 8 to 25 characters without capital letters or symbols.");
       }
-      Config config = new Config();
-      Connection conn = config.getConnection();
+      Connection conn = UsersStore.getConnection("application.properties");
       UsersStore usersStore = new UsersStore(conn);
       usersStore.addUser(username);
 

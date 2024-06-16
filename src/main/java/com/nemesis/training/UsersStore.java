@@ -52,9 +52,9 @@ public class UsersStore{
     }
   }
 
-  public static Connection getConnection() throws IOException, SQLException {
+  public static Connection getConnection(String file) throws IOException, SQLException {
     Config config = Config.getConfig();
-
+    config.getProperties(file);
     return DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
   }
 
