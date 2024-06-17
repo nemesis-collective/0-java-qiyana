@@ -29,7 +29,7 @@ public class UsersStore{
     }
   }
 
-  public void addUser(String name) {
+  public void createUser(String name) {
     String insertSQL;
     try {
       insertSQL = "INSERT INTO USERS (name) VALUES (?)";
