@@ -27,10 +27,10 @@ public class UsersStoreTest {
 
     @Test
     void addUserTest_shouldAddUser() throws SQLException, IOException {
-        String nome = "joaopaulo";
+        String name = "joaopaulo";
         Connection conn = UsersStore.getConnection("application.properties");
         UsersStore usersStore = new UsersStore(conn);
-        usersStore.addUser(nome);
+        usersStore.createUser(name);
     }
 
     @Test

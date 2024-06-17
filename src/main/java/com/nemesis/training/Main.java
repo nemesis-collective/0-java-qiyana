@@ -13,7 +13,7 @@ public class Main {
       }
       Connection conn = UsersStore.getConnection("application.properties");
       UsersStore usersStore = new UsersStore(conn);
-      usersStore.addUser(username);
+      usersStore.createUser(username);
 
     } catch (ArrayIndexOutOfBoundsException e) {
       System.out.println("No names were written.");
