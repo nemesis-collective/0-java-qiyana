@@ -52,7 +52,7 @@ public class UsersStore {
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
 
-            generatedId = getGeneratedKeys(preparedStatement);
+            generatedId = getGeneratedId(preparedStatement);
         } catch (SQLException e) {
             System.err.println(
                     "An error occurred while adding the user in the database." + e.getMessage());
@@ -81,7 +81,7 @@ public class UsersStore {
      * @param   prep   a PreparedStatement Object created by a Connection.
      * @return         the id of the last name added to database.
      */
-    public long getGeneratedKeys(PreparedStatement prep) throws SQLException {
+    public long getGeneratedId(PreparedStatement prep) {
         long lastId = 0;
         try {
             ResultSet generatedKeys = prep.getGeneratedKeys();
