@@ -5,6 +5,11 @@ import java.sql.*;
 import java.util.Optional;
 import java.util.Properties;
 
+/*
+ * @author qiyanatech
+ *
+ * Class responsible to do operations at the database.
+ */
 public class UsersStore {
     Config config;
     Connection conn;
@@ -20,12 +25,11 @@ public class UsersStore {
         this.createTable();
     }
 
+    /*
+     * Executes a CREATE TABLE query, but only if the table doesn't exist yet.
+     */
     public void createTable() {
         try (Statement stmt = this.conn.createStatement()) {
-            String createTableSQL =
-                    "CREATE TABLE IF NOT EXISTS USERS ("
-                            + "id LONG AUTO_INCREMENT, "
-                            + "name VARCHAR(255) NOT NULL)";
             stmt.execute(createTableSQL);
         } catch (SQLException e) {
             System.out.println(
@@ -33,6 +37,12 @@ public class UsersStore {
         }
     }
 
+    /*
+     * Uses an SQL query to insert a username string into the previously created table.
+     *
+     * @param   name   username who will be added at database.
+     * @return         a User Object.
+     */
     public User createUser(String name) {
 
         long generatedId = 0;
@@ -53,22 +63,34 @@ public class UsersStore {
                 .build();
     }
 
+    /*
+     * Read the variables of a properties file to create a Connection Object.
+     *
+     * @param   file   name of the properties file who got the variables to connect at database.
+     * @return         a Connection Object.
+     */
     public static Connection getConnection(String file) throws IOException, SQLException {
         Config config = Config.getConfig();
         config.getProperties(file);
         return DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
     }
 
+    /*
+     * Use a PreparedStatement Object to find the id of the last name added at the database.
+     *
+     * @param   prep   a PreparedStatement Object created by a Connection.
+     * @return         the id of the last name added to database.
+     */
     public long getGeneratedKeys(PreparedStatement prep) throws SQLException {
-        long generatedId = 0;
+        long lastId = 0;
         try {
             ResultSet generatedKeys = prep.getGeneratedKeys();
             if (generatedKeys.next()) {
-                generatedId = generatedKeys.getInt(1);
+                lastId = generatedKeys.getInt(1);
             }
         } catch (SQLException e) {
-            System.err.println("Ocorreu um erro.");
+            System.err.println("An error occurred while find the last id.");
         }
-        return generatedId;
+        return lastId;
     }
 }
