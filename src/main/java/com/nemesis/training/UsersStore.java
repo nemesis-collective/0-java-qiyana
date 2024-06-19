@@ -8,7 +8,11 @@ import java.util.Properties;
 public class UsersStore {
     Config config;
     Connection conn;
-    final String insertSQL = "INSERT INTO USERS (name) VALUES (?)";
+    public final String insertSQL = "INSERT INTO USERS (name) VALUES (?)";
+    public final String createTableSQL =
+            "CREATE TABLE IF NOT EXISTS USERS ("
+                    + "id LONG AUTO_INCREMENT, "
+                    + "name VARCHAR(255) NOT NULL)";
 
     UsersStore(Connection connection) {
         this.config = Config.getConfig();
