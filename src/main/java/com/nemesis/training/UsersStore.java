@@ -38,12 +38,7 @@ public class UsersStore {
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
 
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    generatedId = generatedKeys.getInt(1);
-                    System.out.println("Name added successfully with ID = " + generatedId);
-                } else System.err.println("Failed to save name to database.");
-            }
+            generatedId = getGeneratedKeys(preparedStatement);
         } catch (SQLException e) {
             System.err.println(
                     "An error occurred while adding the user in the database." + e.getMessage());
@@ -60,4 +55,16 @@ public class UsersStore {
         return DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
     }
 
+    public long getGeneratedKeys(PreparedStatement prep) throws SQLException {
+        long generatedId = 0;
+        try {
+            ResultSet generatedKeys = prep.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                generatedId = generatedKeys.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Ocorreu um erro.");
+        }
+        return generatedId;
+    }
 }
