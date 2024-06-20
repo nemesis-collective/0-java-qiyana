@@ -17,7 +17,7 @@ public class UsersStoreTest {
 
   @Test
   void createTableTest_shouldCreateTable() throws SQLException, IOException {
-    Connection conn = UsersStore.getConnection("application.properties");
+    Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore userTest = new UsersStore(conn);
     assertNotNull(userTest);
     conn.close();
@@ -50,7 +50,7 @@ public class UsersStoreTest {
 
   @Test
   void createUserTest_whenNamePassed_shouldCreateUser() throws SQLException, IOException {
-    Connection conn = UsersStore.getConnection("application.properties");
+    Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
     User userTest = usersStore.createUser("joaopaulo");
     assertNotNull(userTest);
@@ -126,7 +126,7 @@ public class UsersStoreTest {
   @Test
   public void getGeneratedIdTest_whenGetGeneratedKeysFails_shouldNotThrowException()
       throws SQLException, IOException {
-    Connection conn = UsersStore.getConnection("application.properties");
+    Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
     PreparedStatement prep = mock(PreparedStatement.class);
 
@@ -142,7 +142,7 @@ public class UsersStoreTest {
   @Test
   public void getGeneratedIdTest_whenNextFails_shouldNotThrowException()
       throws SQLException, IOException {
-    Connection conn = UsersStore.getConnection("application.properties");
+    Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
 
     PreparedStatement prep = mock(PreparedStatement.class);
@@ -160,7 +160,7 @@ public class UsersStoreTest {
   @Test
   public void getConnectionTest_whenFileIsPassed_shouldReturnConnection()
       throws SQLException, IOException {
-    Connection conn = UsersStore.getConnection("application.properties");
+    Connection conn = UsersStore.getConnection("test.application.properties");
     assertNotNull(conn);
     conn.close();
   }
