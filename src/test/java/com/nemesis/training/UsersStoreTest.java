@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 public class UsersStoreTest {
 
-  final String insertSQL = "INSERT INTO USERS (name) VALUES (?)";
-  final String createTableSQL =
+  final String INSERT_SQL = "INSERT INTO USERS (name) VALUES (?)";
+  final String CREATE_TABLE_SQL =
       "CREATE TABLE IF NOT EXISTS USERS ("
           + "id LONG AUTO_INCREMENT, "
           + "name VARCHAR(255) NOT NULL)";
@@ -40,7 +40,7 @@ public class UsersStoreTest {
 
     when(connMock.createStatement()).thenReturn(statementMock);
 
-    when(statementMock.execute(createTableSQL)).thenThrow(new SQLException());
+    when(statementMock.execute(CREATE_TABLE_SQL)).thenThrow(new SQLException());
 
     assertDoesNotThrow(
         () -> {
@@ -65,9 +65,9 @@ public class UsersStoreTest {
     Statement statementMock = mock(Statement.class);
 
     when(connMock.createStatement()).thenReturn(statementMock);
-    when(statementMock.execute(createTableSQL)).thenReturn(true);
+    when(statementMock.execute(CREATE_TABLE_SQL)).thenReturn(true);
 
-    when(connMock.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS))
+    when(connMock.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS))
         .thenThrow(new SQLException());
 
     UsersStore usersTest = new UsersStore(connMock);
@@ -89,7 +89,7 @@ public class UsersStoreTest {
 
     PreparedStatement prep = mock(PreparedStatement.class);
 
-    when(connMock.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
+    when(connMock.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
 
     doThrow(new SQLException()).when(prep).setString(anyInt(), anyString());
 
@@ -112,7 +112,7 @@ public class UsersStoreTest {
 
     PreparedStatement prep = mock(PreparedStatement.class);
 
-    when(connMock.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
+    when(connMock.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
     doThrow(new SQLException()).when(prep).executeUpdate();
 
     UsersStore usersStore = new UsersStore(connMock);

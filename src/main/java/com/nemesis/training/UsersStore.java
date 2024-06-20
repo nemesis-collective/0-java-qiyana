@@ -11,8 +11,8 @@ import java.util.Optional;
 public class UsersStore {
   Config config;
   Connection conn;
-  public final String insertSQL = "INSERT INTO USERS (name) VALUES (?)";
-  public final String createTableSQL =
+  public final String INSERT_SQL = "INSERT INTO USERS (name) VALUES (?)";
+  public final String CREATE_TABLE_SQL =
       "CREATE TABLE IF NOT EXISTS USERS ("
           + "id LONG AUTO_INCREMENT, "
           + "name VARCHAR(255) NOT NULL)";
@@ -26,7 +26,7 @@ public class UsersStore {
   /** Executes a CREATE TABLE query, but only if the table doesn't exist yet. */
   public void createTable() {
     try (Statement stmt = this.conn.createStatement()) {
-      stmt.execute(createTableSQL);
+      stmt.execute(CREATE_TABLE_SQL);
     } catch (SQLException e) {
       System.out.println(
           "An error occurred while creating the table in the database." + e.getMessage());
@@ -44,7 +44,7 @@ public class UsersStore {
     long generatedId = 0;
 
     try (PreparedStatement preparedStatement =
-        this.conn.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+        this.conn.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)) {
       preparedStatement.setString(1, name);
       preparedStatement.executeUpdate();
 
