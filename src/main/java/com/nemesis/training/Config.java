@@ -6,9 +6,6 @@ import java.util.Properties;
 
 public class Config {
   private static Config config;
-  private String url;
-  private String username;
-  private String password;
   private static Properties properties;
 
   public static Config getConfig() {
