@@ -5,8 +5,9 @@ import java.sql.*;
 import java.util.Optional;
 
 /**
- * @author qiyanatech
- *     <p>Class responsible to do operations at the database.
+ * Uses an SQL query to insert a username string into the previously created table.
+ *
+ * Class responsible for database operations.
  */
 public class UsersStore {
   Config config;
