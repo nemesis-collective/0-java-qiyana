@@ -18,8 +18,8 @@ public class ConfigTest {
   @Test
   void getPropertiesTest_whenParamsValid_shouldReturnProperties() throws IOException {
     Properties properties = config.getProperties("test.application.properties");
-    assertEquals("testuser", properties.getProperty("db.username"));
-    assertEquals("testpass", properties.getProperty("db.password"));
+    assertEquals("admin", properties.getProperty("db.USERNAME"));
+    assertEquals("dbtest", properties.getProperty("db.PASSWORD"));
   }
 
   @Test
