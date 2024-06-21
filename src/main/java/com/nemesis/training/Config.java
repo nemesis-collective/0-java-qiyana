@@ -28,17 +28,15 @@ public class Config {
   }
 
   public Properties getProperties(String propertiesName) throws IOException {
-    if (properties == null) {
-      Properties prop = new Properties();
-      try (InputStream inputStream =
-          Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
-        if (inputStream == null) {
-          throw new IOException(
-              "Property file '" + propertiesName + "' was not found or could not be read.");
-        }
-        prop.load(inputStream);
-        properties = prop;
+    Properties prop = new Properties();
+    try (InputStream inputStream =
+        Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
+      if (inputStream == null) {
+        throw new IOException(
+            "Property file '" + propertiesName + "' was not found or could not be read.");
       }
+      prop.load(inputStream);
+      properties = prop;
     }
     return properties;
   }

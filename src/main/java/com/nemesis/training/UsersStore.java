@@ -4,11 +4,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Optional;
 
-/**
- * Uses an SQL query to insert a username string into the previously created table.
- *
- * Class responsible for database operations.
- */
+/** Class responsible for database operations. */
 public class UsersStore {
   Config config;
   Connection conn;
