@@ -59,10 +59,17 @@ public class UsersStore {
    * @param file name of the properties file who got the variables to connect at database.
    * @return a Connection Object.
    */
-  public static Connection getConnection(String file) throws IOException, SQLException {
+  public static Connection getConnection(String file) {
     Config config = Config.getConfig();
-    config.getProperties(file);
-    return DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
+    Connection conn = null;
+    try {
+      config.getProperties(file);
+      conn =
+          DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
+    } catch (IOException | SQLException e) {
+      e.getMessage();
+    }
+    return conn;
   }
 
   /**
