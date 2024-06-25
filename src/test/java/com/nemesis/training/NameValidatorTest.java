@@ -18,4 +18,16 @@ public class NameValidatorTest {
     var response = NameValidator.isValidName("João123");
     assertFalse(response);
   }
+
+  @Test
+  void NameValidatorTest_whenNameIsShort_mustReturnFalse() {
+    var response = NameValidator.isValidName("joao");
+    assertFalse(response);
+  }
+
+  @Test
+  void NameValidatorTest_whenNameIsLong_mustReturnFalse() {
+    var response = NameValidator.isValidName("abcdefghijklmnopqrstuvwxyz");
+    assertFalse(response);
+  }
 }
