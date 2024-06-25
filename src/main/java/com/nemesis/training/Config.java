@@ -2,6 +2,7 @@ package com.nemesis.training;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Properties;
 
 public class Config {
@@ -27,17 +28,18 @@ public class Config {
     return properties.getProperty("db.PASSWORD");
   }
 
-  public Properties getProperties(String propertiesName) throws IOException {
+  public Properties getProperties(String propertiesName) {
     Properties prop = new Properties();
-    try (InputStream inputStream =
-        Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
-      if (inputStream == null) {
-        throw new IOException(
-            "Property file '" + propertiesName + "' was not found or could not be read.");
+    if (!Objects.equals(propertiesName, "")) {
+      try (InputStream inputStream =
+          Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
+        prop.load(inputStream);
+        properties = prop;
+      } catch (IOException | NullPointerException e) {
+        e.getMessage();
       }
-      prop.load(inputStream);
-      properties = prop;
     }
-    return properties;
+
+    return prop;
   }
 }
