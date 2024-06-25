@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test;
 public class NameValidatorTest {
 
   @Test
-  void mustReturnTrue() {
+  void NameValidatorTest_whenNameIsValid_mustReturnTrue() {
     var response = NameValidator.isValidName("joaopaulo");
     assertTrue(response);
   }
 
   @Test
-  void mustReturnFalse() {
+  void NameValidatorTest_whenNameIsInvalid_mustReturnFalse() {
     var response = NameValidator.isValidName("João123");
     assertFalse(response);
   }
