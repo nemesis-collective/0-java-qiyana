@@ -1,6 +1,5 @@
 package com.nemesis.training;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.Optional;
 
@@ -66,7 +65,7 @@ public class UsersStore {
       config.getProperties(file);
       conn =
           DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
-    } catch (IOException | SQLException e) {
+    } catch (SQLException e) {
       e.getMessage();
     }
     return conn;
