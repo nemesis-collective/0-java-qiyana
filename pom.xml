@@ -74,18 +74,26 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
+        <configuration>
+          <excludes>
+            <exclude>**/*Test.class</exclude>
+            <exclude>**/*TestCase.class</exclude>
+          </excludes>
+          <rules>
+            <rule>
+              <classfiles>**/*.class</classfiles>
+              <excludes>
+                <exclude>*lombok.Generated*</exclude>
+              </excludes>
+            </rule>
+          </rules>
+        </configuration>
         <executions>
           <execution>
             <goals>
               <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <goals>
               <goal>report</goal>
             </goals>
-            <phase>verify</phase>
           </execution>
         </executions>
       </plugin>
