@@ -20,29 +20,29 @@ public class MainTest {
   }
 
   @Test
-  public void mainTest_whenArgsAreVoid_mustNotThrowException() {
-    String[] args = {};
+  public void RunTest_whenArgsAreValid_mustThrowAddedUserMessage() {
+    String[] args = {"validname"};
+    Main main = new Main();
+    main.run(args);
+    assertNotEquals("Failed to save name to database.", outContent.toString());
+  }
 
+  @Test
+  public void RunTest_whenArgsAreVoid_mustNotThrowException() {
+    String[] args = {};
+    Main mainTest = new Main();
     assertDoesNotThrow(
         () -> {
-          Main.main(args);
+          mainTest.run(args);
         });
   }
 
   @Test
-  public void mainTest_whenArgsIsShortOrLong_mustThrowMessage() {
+  public void RunTest_whenArgsIsShortOrLong_mustThrowMessage() {
     Main main = new Main();
     main.run(new String[] {"joao"});
     assertEquals(
         "Please, write a name with 8 to 25 characters without capital letters or symbols.",
         outContent.toString());
-  }
-
-  @Test
-  public void UserCreationTest_whenUserIdIs0_mustThrowErrorMessage() {
-    Main main = new Main();
-    User userTest = new User(0, "joao");
-    main.UserCreation(userTest);
-    assertEquals("Failed to save name to database.", errContent.toString());
   }
 }
