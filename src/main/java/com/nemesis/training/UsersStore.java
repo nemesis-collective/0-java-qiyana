@@ -66,7 +66,8 @@ public class UsersStore {
       conn =
           DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
     } catch (SQLException e) {
-      e.getMessage();
+      System.err.println(
+          "An error occurred while creating a connection with database." + e.getMessage());
     }
     return conn;
   }
@@ -85,7 +86,7 @@ public class UsersStore {
         lastId = generatedKeys.getInt(1);
       }
     } catch (SQLException e) {
-      System.err.println("An error occurred while find the last id.");
+      System.err.println("An error occurred while find the last id." + e.getMessage());
     }
     return lastId;
   }
