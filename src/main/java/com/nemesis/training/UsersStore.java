@@ -90,4 +90,12 @@ public class UsersStore {
     }
     return lastId;
   }
+
+  public void verifyUserCreation(User user) {
+    if (user.getId() == 0) {
+      System.err.print("Failed to save name to database.");
+    } else {
+      System.out.print("Name added successfully with ID = " + user.getId());
+    }
+  }
 }
