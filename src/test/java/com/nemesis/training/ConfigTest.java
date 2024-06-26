@@ -2,7 +2,6 @@ package com.nemesis.training;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
 import java.util.Properties;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,24 +15,23 @@ public class ConfigTest {
   }
 
   @Test
-  void getPropertiesTest_whenParamsValid_shouldReturnProperties() throws IOException {
+  void getPropertiesTest_whenParamsValid_shouldReturnProperties() {
     Properties properties = config.getProperties("test.application.properties");
     assertEquals("admin", properties.getProperty("db.USERNAME"));
     assertEquals("dbtest", properties.getProperty("db.PASSWORD"));
   }
 
   @Test
-  void getPropertiesTest_whenParamsInvalid_shouldReturnIOException() throws IOException {
+  void getPropertiesTest_whenParamsInvalid_shouldNotThrowException() {
+    assertDoesNotThrow(
+        () -> {
+          config.getProperties("non-existent.properties");
+        });
+  }
 
-    IOException exception =
-        assertThrows(
-            IOException.class,
-            () -> {
-              config.getProperties("non-existent.properties");
-            });
-
-    assertEquals(
-        "Property file 'non-existent.properties' was not found or could not be read.",
-        exception.getMessage());
+  @Test
+  void getPropertiesTest_whenPropertiesNameIsVoid_shouldReturnVoidProperties() {
+    Properties prop = config.getProperties("");
+    assertEquals("{}", prop.toString());
   }
 }
