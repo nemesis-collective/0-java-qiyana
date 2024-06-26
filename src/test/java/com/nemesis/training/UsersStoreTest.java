@@ -180,7 +180,7 @@ public class UsersStoreTest {
   public void getConnectionTest_whenPropertiesIsWrong_shouldNotThrowException() {
     assertDoesNotThrow(
         () -> {
-          UsersStore.getConnection("test2.application.properties");
+          UsersStore.getConnection("wrong.application.properties");
         });
   }
 }
