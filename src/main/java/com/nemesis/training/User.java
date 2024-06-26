@@ -1,10 +1,8 @@
 package com.nemesis.training;
 
-import lombok.Generated;
 import lombok.Getter;
 
 @Getter
-@Generated
 public class User {
 
   private long id;
