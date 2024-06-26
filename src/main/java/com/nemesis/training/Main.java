@@ -15,17 +15,17 @@ public class Main {
         Connection conn = UsersStore.getConnection("application.properties");
         UsersStore usersStore = new UsersStore(conn);
         User user = usersStore.createUser(username);
-        VerifyUserCreation(user);
+        verifyUserCreation(user);
       } else {
-        System.out.print(
+        System.err.print(
             "Please, write a name with 8 to 25 characters without capital letters or symbols.");
       }
     } catch (ArrayIndexOutOfBoundsException e) {
-      System.out.print("No names were written.");
+      System.err.print("No names were written.");
     }
   }
 
-  public void VerifyUserCreation(User user) {
+  public void verifyUserCreation(User user) {
     if (user.getId() == 0) {
       System.err.print("Failed to save name to database.");
     } else {
