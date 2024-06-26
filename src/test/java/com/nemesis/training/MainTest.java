@@ -43,6 +43,6 @@ public class MainTest {
     main.run(new String[] {"joao"});
     assertEquals(
         "Please, write a name with 8 to 25 characters without capital letters or symbols.",
-        outContent.toString());
+        errContent.toString());
   }
 }
