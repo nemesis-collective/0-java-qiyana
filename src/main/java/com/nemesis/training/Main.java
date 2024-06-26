@@ -15,9 +15,9 @@ public class Main {
         Connection conn = UsersStore.getConnection("application.properties");
         UsersStore usersStore = new UsersStore(conn);
         User user = usersStore.createUser(username);
-        UserCreation(user);
+        VerifyUserCreation(user);
       } else {
-        System.out.println(
+        System.out.print(
             "Please, write a name with 8 to 25 characters without capital letters or symbols.");
       }
     } catch (ArrayIndexOutOfBoundsException e) {
@@ -25,11 +25,11 @@ public class Main {
     }
   }
 
-  public void UserCreation(User user) {
+  public void VerifyUserCreation(User user) {
     if (user.getId() == 0) {
       System.err.print("Failed to save name to database.");
     } else {
-      System.out.println("Name added successfully with ID = " + user.getId());
+      System.out.print("Name added successfully with ID = " + user.getId());
     }
   }
 }
