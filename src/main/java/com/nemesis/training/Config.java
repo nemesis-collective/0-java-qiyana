@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.Properties;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Config {
   private static Config config;
   private static Properties properties;
@@ -36,7 +38,7 @@ public class Config {
         prop.load(inputStream);
         properties = prop;
       } catch (IOException | NullPointerException e) {
-        System.err.println("An error occurred while loading properties." + e.getMessage());
+        log.error("An error occurred while loading properties." + e.getMessage());
       }
     }
 
