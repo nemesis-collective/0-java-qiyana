@@ -2,8 +2,10 @@ package com.nemesis.training;
 
 import java.sql.*;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
 /** Class responsible for database operations. */
+@Slf4j
 public class UsersStore {
   Config config;
   Connection conn;
@@ -24,7 +26,7 @@ public class UsersStore {
     try (Statement stmt = this.conn.createStatement()) {
       stmt.execute(CREATE_TABLE_SQL);
     } catch (SQLException e) {
-      System.out.println(
+      log.error(
           "An error occurred while creating the table in the database." + e.getMessage());
     }
   }
@@ -46,7 +48,7 @@ public class UsersStore {
 
       generatedId = getGeneratedId(preparedStatement);
     } catch (SQLException e) {
-      System.err.println(
+      log.error(
           "An error occurred while adding the user in the database." + e.getMessage());
     }
     return UserBuild.builder().id(Optional.of(generatedId)).name(name).build();
@@ -66,7 +68,7 @@ public class UsersStore {
       conn =
           DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
     } catch (SQLException e) {
-      System.err.println(
+      log.error(
           "An error occurred while creating a connection with database." + e.getMessage());
     }
     return conn;
@@ -86,14 +88,14 @@ public class UsersStore {
         lastId = generatedKeys.getInt(1);
       }
     } catch (SQLException e) {
-      System.err.println("An error occurred while find the last id." + e.getMessage());
+      log.error("An error occurred while find the last id." + e.getMessage());
     }
     return lastId;
   }
 
   public void verifyUserCreation(User user) {
     if (user.getId() == 0) {
-      System.err.print("Failed to save name to database.");
+      log.error("Failed to save name to database.");
     } else {
       System.out.print("Name added successfully with ID = " + user.getId());
     }
