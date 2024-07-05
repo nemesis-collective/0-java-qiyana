@@ -2,47 +2,55 @@ package com.nemesis.training;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class MainTest {
-  private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-  private static final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+  Main main = new Main();
+  String logpath = "logs/app.log";
 
   @BeforeEach
-  public void setUpStreams() {
-    System.setOut(new PrintStream(outContent));
-    System.setErr(new PrintStream(errContent));
-    outContent.reset();
-    errContent.reset();
+  public void tearDown() throws IOException {
+    Files.write(
+        Paths.get(logpath),
+        new byte[0],
+        StandardOpenOption.TRUNCATE_EXISTING,
+        StandardOpenOption.CREATE);
   }
 
   @Test
-  public void RunTest_whenArgsAreValid_mustThrowAddedUserMessage() {
-    String[] args = {"validname"};
-    Main main = new Main();
-    main.run(args);
-    assertNotEquals("Failed to save name to database.", outContent.toString());
+  public void RunTest_whenArgsAreValid_mustThrowAddedUserMessage() throws IOException {
+    main.run(new String[] {"validname"});
+    List<String> logLines = Files.readAllLines(Paths.get(logpath));
+    String logContent = String.join("\n", logLines);
+
+    assertFalse(logContent.contains("Failed to save name to database."));
   }
 
   @Test
   public void RunTest_whenArgsAreVoid_mustNotThrowException() {
     String[] args = {};
-    Main mainTest = new Main();
     assertDoesNotThrow(
         () -> {
-          mainTest.run(args);
+          main.run(args);
         });
   }
 
   @Test
-  public void RunTest_whenArgsIsShortOrLong_mustThrowMessage() {
-    Main main = new Main();
-    main.run(new String[] {"joao"});
-    assertEquals(
-        "Please, write a name with 8 to 25 characters without capital letters or symbols.",
-        errContent.toString());
+  public void MainTest_whenArgsIsShortOrLong_mustThrowMessage() throws IOException {
+
+    Main.main(new String[] {"joao"});
+
+    List<String> logLines = Files.readAllLines(Paths.get(logpath));
+    String logContent = String.join("\n", logLines);
+
+    assertTrue(
+        logContent.contains(
+            "Please, write a name with 8 to 25 characters without capital letters or symbols."));
   }
 }
