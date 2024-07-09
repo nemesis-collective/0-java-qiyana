@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 public class UsersStoreTest {
 
-  final String INSERT_SQL = "INSERT INTO USERS (name) VALUES (?)";
-  final String CREATE_TABLE_SQL =
+  private final String INSERT_SQL = "INSERT INTO USERS (name) VALUES (?)";
+  private final String CREATE_TABLE_SQL =
       "CREATE TABLE IF NOT EXISTS USERS ("
           + "id LONG AUTO_INCREMENT, "
           + "name VARCHAR(255) NOT NULL)";

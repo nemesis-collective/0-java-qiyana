@@ -7,15 +7,15 @@ import lombok.extern.slf4j.Slf4j;
 /** Class responsible for database operations. */
 @Slf4j
 public class UsersStore {
-  Config config;
-  Connection conn;
+  private Config config;
+  private Connection conn;
   public final String INSERT_SQL = "INSERT INTO USERS (name) VALUES (?)";
   public final String CREATE_TABLE_SQL =
       "CREATE TABLE IF NOT EXISTS USERS ("
           + "id LONG AUTO_INCREMENT, "
           + "name VARCHAR(255) NOT NULL)";
 
-  UsersStore(Connection connection) {
+  protected UsersStore(Connection connection) {
     this.config = Config.getConfig();
     this.conn = connection;
     this.createTable();

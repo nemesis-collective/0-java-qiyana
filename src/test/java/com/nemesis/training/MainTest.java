@@ -11,8 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class MainTest {
-  Main main = new Main();
-  String logpath = "logs/app.log";
+  private Main main = new Main();
+  private String logpath = "logs/app.log";
 
   @BeforeEach
   public void tearDown() throws IOException {

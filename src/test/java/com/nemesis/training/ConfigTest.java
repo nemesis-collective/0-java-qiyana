@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class ConfigTest {
-  static Config config;
+  private static Config config;
 
   @BeforeAll
   static void setUp() {
