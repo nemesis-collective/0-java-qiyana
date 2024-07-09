@@ -9,9 +9,9 @@ public class NameValidator {
       return false;
     }
 
-    String REGEX = ".*[0-9A-Z\\W_].*";
+    String regex = ".*[0-9A-Z\\W_].*";
 
-    Pattern pattern = Pattern.compile(REGEX);
+    Pattern pattern = Pattern.compile(regex);
 
     Matcher matcher = pattern.matcher(name);
 
