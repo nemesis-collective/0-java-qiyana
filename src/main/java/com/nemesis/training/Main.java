@@ -17,7 +17,7 @@ public class Main {
         Connection conn = UsersStore.getConnection("application.properties");
         UsersStore usersStore = new UsersStore(conn);
         User user = usersStore.createUser(username);
-        usersStore.verifyUserCreation(user);
+        usersStore.verifyUserCreation(user.getId());
       } else {
         log.error(
             "Please, write a name with 8 to 25 characters without capital letters or symbols.");

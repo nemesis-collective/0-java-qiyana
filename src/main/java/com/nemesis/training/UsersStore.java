@@ -91,11 +91,11 @@ public class UsersStore {
     return lastId;
   }
 
-  public void verifyUserCreation(User user) {
-    if (user.getId() == 0) {
+  public void verifyUserCreation(long id) {
+    if (id == 0) {
       log.error("Failed to save name to database.");
     } else {
-      log.debug("Name added successfully with ID = {}", user.getId());
+      log.debug("Name added successfully with ID = {}", id);
     }
   }
 }
