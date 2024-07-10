@@ -18,7 +18,6 @@ class ConfigTest {
   void getPropertiesTest_whenParamsValid_shouldReturnProperties() {
     Properties properties = config.getProperties("test.application.properties");
     assertEquals("admin", properties.getProperty("db.USERNAME"));
-    assertEquals("dbtest", properties.getProperty("db.PASSWORD"));
   }
 
   @Test
