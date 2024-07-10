@@ -40,7 +40,7 @@ public class Config {
         prop.load(inputStream);
         properties = prop;
       } catch (IOException | NullPointerException e) {
-        log.error("An error occurred while loading properties.{}", e.getMessage());
+        log.error("An error occurred while loading properties.{}", e);
       }
     }
 

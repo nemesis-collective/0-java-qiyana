@@ -26,7 +26,7 @@ public class UsersStore {
     try (Statement stmt = this.conn.createStatement()) {
       stmt.execute(CREATE_TABLE_QUERY);
     } catch (SQLException e) {
-      log.error("An error occurred while creating the table in the database.{}", e.getMessage());
+      log.error("An error occurred while creating the table in the database.{}", e);
     }
   }
 
@@ -47,7 +47,7 @@ public class UsersStore {
 
       generatedId = getGeneratedId(preparedStatement);
     } catch (SQLException e) {
-      log.error("An error occurred while adding the user in the database.{}", e.getMessage());
+      log.error("An error occurred while adding the user in the database.{}", e);
     }
     return UserBuild.builder().id(Optional.of(generatedId)).name(name).build();
   }
@@ -66,7 +66,7 @@ public class UsersStore {
       conn =
           DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());
     } catch (SQLException e) {
-      log.error("An error occurred while creating a connection with database.{}", e.getMessage());
+      log.error("An error occurred while creating a connection with database.{}", e);
     }
     return conn;
   }
@@ -85,8 +85,9 @@ public class UsersStore {
         lastId = generatedKeys.getInt(1);
       }
     } catch (SQLException e) {
-      log.error("An error occurred while find the last id.{}", e.getMessage());
+      log.error("An error occurred while find the last id.{}", e);
     }
+
     return lastId;
   }
 
