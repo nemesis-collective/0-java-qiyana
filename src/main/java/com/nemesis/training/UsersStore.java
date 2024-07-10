@@ -7,8 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 /** Class responsible for database operations. */
 @Slf4j
 public class UsersStore {
-  private Config config;
-  private Connection conn;
+  private final Config config;
+  private final Connection conn;
   public static final String INSERT_QUERY = "INSERT INTO USERS (name) VALUES (?)";
   public static final String CREATE_TABLE_QUERY =
       "CREATE TABLE IF NOT EXISTS USERS ("
