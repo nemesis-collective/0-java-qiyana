@@ -7,7 +7,8 @@ import java.sql.*;
 import org.junit.jupiter.api.Test;
 
 class UsersStoreTest {
-
+  private final String testPath = "test.application.properties";
+  private final String validName = "joaopaulo";
   private final String INSERT_QUERY = "INSERT INTO USERS (name) VALUES (?)";
   private final String CREATE_TABLE_QUERY =
       "CREATE TABLE IF NOT EXISTS USERS ("
@@ -16,7 +17,7 @@ class UsersStoreTest {
 
   @Test
   void createTableTestShouldCreateTable() throws SQLException {
-    Connection conn = UsersStore.getConnection("test.application.properties");
+    Connection conn = UsersStore.getConnection(testPath);
     UsersStore userTest = new UsersStore(conn);
     assertNotNull(userTest);
     conn.close();
@@ -49,9 +50,9 @@ class UsersStoreTest {
 
   @Test
   void createUserTestWhenNamePassedShouldCreateUser() throws SQLException {
-    Connection conn = UsersStore.getConnection("test.application.properties");
+    Connection conn = UsersStore.getConnection(testPath);
     UsersStore usersStore = new UsersStore(conn);
-    User userTest = usersStore.createUser("joaopaulo");
+    User userTest = usersStore.createUser(validName);
     assertNotNull(userTest);
     conn.close();
   }
@@ -73,7 +74,7 @@ class UsersStoreTest {
 
     assertDoesNotThrow(
         () -> {
-          usersTest.createUser("joaopaulo");
+          usersTest.createUser(validName);
         });
   }
 
@@ -96,7 +97,7 @@ class UsersStoreTest {
 
     assertDoesNotThrow(
         () -> {
-          usersTest.createUser("joaopaulo");
+          usersTest.createUser(validName);
         });
   }
 
@@ -118,13 +119,13 @@ class UsersStoreTest {
 
     assertDoesNotThrow(
         () -> {
-          usersStore.createUser("joaopaulo");
+          usersStore.createUser(validName);
         });
   }
 
   @Test
   void getGeneratedIdTestWhenGetGeneratedKeysFailsShouldNotThrowException() throws SQLException {
-    Connection conn = UsersStore.getConnection("test.application.properties");
+    Connection conn = UsersStore.getConnection(testPath);
     UsersStore usersStore = new UsersStore(conn);
     PreparedStatement prep = mock(PreparedStatement.class);
 
@@ -139,7 +140,7 @@ class UsersStoreTest {
 
   @Test
   void getGeneratedIdTestWhenNextFailsShouldNotThrowException() throws SQLException {
-    Connection conn = UsersStore.getConnection("test.application.properties");
+    Connection conn = UsersStore.getConnection(testPath);
     UsersStore usersStore = new UsersStore(conn);
 
     PreparedStatement prep = mock(PreparedStatement.class);
@@ -156,7 +157,7 @@ class UsersStoreTest {
 
   @Test
   void getGeneratedIdTestWhenNextIsFalseShouldReturn0() throws SQLException {
-    Connection conn = UsersStore.getConnection("test.application.properties");
+    Connection conn = UsersStore.getConnection(testPath);
     UsersStore usersStore = new UsersStore(conn);
 
     PreparedStatement prep = mock(PreparedStatement.class);
@@ -170,7 +171,7 @@ class UsersStoreTest {
 
   @Test
   void getConnectionTestWhenFileIsPassedShouldReturnConnection() throws SQLException {
-    Connection conn = UsersStore.getConnection("test.application.properties");
+    Connection conn = UsersStore.getConnection(testPath);
     assertNotNull(conn);
     conn.close();
   }
