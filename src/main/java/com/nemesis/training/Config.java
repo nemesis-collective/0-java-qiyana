@@ -37,9 +37,11 @@ public class Config {
     if (!Objects.equals(propertiesName, "")) {
       try (InputStream inputStream =
           Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
-        prop.load(inputStream);
-        properties = prop;
-      } catch (IOException | NullPointerException e) {
+        if (inputStream != null) {
+          prop.load(inputStream);
+          properties = prop;
+        }
+      } catch (IOException e) {
         log.error("An error occurred while loading properties.{}", e);
       }
     }
