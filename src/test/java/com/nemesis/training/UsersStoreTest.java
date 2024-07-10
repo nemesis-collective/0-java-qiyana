@@ -6,10 +6,10 @@ import static org.mockito.Mockito.*;
 import java.sql.*;
 import org.junit.jupiter.api.Test;
 
-public class UsersStoreTest {
+class UsersStoreTest {
 
-  private final String INSERT_SQL = "INSERT INTO USERS (name) VALUES (?)";
-  private final String CREATE_TABLE_SQL =
+  private final String INSERT_QUERY = "INSERT INTO USERS (name) VALUES (?)";
+  private final String CREATE_TABLE_QUERY =
       "CREATE TABLE IF NOT EXISTS USERS ("
           + "id LONG AUTO_INCREMENT, "
           + "name VARCHAR(255) NOT NULL)";
@@ -39,7 +39,7 @@ public class UsersStoreTest {
 
     when(connMock.createStatement()).thenReturn(statementMock);
 
-    when(statementMock.execute(CREATE_TABLE_SQL)).thenThrow(new SQLException());
+    when(statementMock.execute(CREATE_TABLE_QUERY)).thenThrow(new SQLException());
 
     assertDoesNotThrow(
         () -> {
@@ -64,9 +64,9 @@ public class UsersStoreTest {
     Statement statementMock = mock(Statement.class);
 
     when(connMock.createStatement()).thenReturn(statementMock);
-    when(statementMock.execute(CREATE_TABLE_SQL)).thenReturn(true);
+    when(statementMock.execute(CREATE_TABLE_QUERY)).thenReturn(true);
 
-    when(connMock.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS))
+    when(connMock.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS))
         .thenThrow(new SQLException());
 
     UsersStore usersTest = new UsersStore(connMock);
@@ -88,7 +88,7 @@ public class UsersStoreTest {
 
     PreparedStatement prep = mock(PreparedStatement.class);
 
-    when(connMock.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
+    when(connMock.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
 
     doThrow(new SQLException()).when(prep).setString(anyInt(), anyString());
 
@@ -111,7 +111,7 @@ public class UsersStoreTest {
 
     PreparedStatement prep = mock(PreparedStatement.class);
 
-    when(connMock.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
+    when(connMock.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
     doThrow(new SQLException()).when(prep).executeUpdate();
 
     UsersStore usersStore = new UsersStore(connMock);
@@ -123,8 +123,7 @@ public class UsersStoreTest {
   }
 
   @Test
-  public void getGeneratedIdTest_whenGetGeneratedKeysFails_shouldNotThrowException()
-      throws SQLException {
+  void getGeneratedIdTest_whenGetGeneratedKeysFails_shouldNotThrowException() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
     PreparedStatement prep = mock(PreparedStatement.class);
@@ -139,7 +138,7 @@ public class UsersStoreTest {
   }
 
   @Test
-  public void getGeneratedIdTest_whenNextFails_shouldNotThrowException() throws SQLException {
+  void getGeneratedIdTest_whenNextFails_shouldNotThrowException() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
 
@@ -156,7 +155,7 @@ public class UsersStoreTest {
   }
 
   @Test
-  public void getGeneratedIdTest_whenNextIsFalse_shouldReturn0() throws SQLException {
+  void getGeneratedIdTest_whenNextIsFalse_shouldReturn0() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
 
@@ -170,14 +169,14 @@ public class UsersStoreTest {
   }
 
   @Test
-  public void getConnectionTest_whenFileIsPassed_shouldReturnConnection() throws SQLException {
+  void getConnectionTest_whenFileIsPassed_shouldReturnConnection() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     assertNotNull(conn);
     conn.close();
   }
 
   @Test
-  public void getConnectionTest_whenPropertiesIsWrong_shouldNotThrowException() {
+  void getConnectionTest_whenPropertiesIsWrong_shouldNotThrowException() {
     assertDoesNotThrow(
         () -> {
           UsersStore.getConnection("invalid.application.properties");

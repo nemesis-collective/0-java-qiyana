@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class NameValidatorTest {
+class NameValidatorTest {
 
   @Test
   void NameValidatorTest_whenNameIsValid_mustReturnTrue() {

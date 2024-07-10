@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MainTest {
+class MainTest {
   private Main main = new Main();
   private String logpath = "logs/app.log";
 
@@ -24,7 +24,7 @@ public class MainTest {
   }
 
   @Test
-  public void RunTest_whenArgsAreValid_mustThrowAddedUserMessage() throws IOException {
+  void RunTest_whenArgsAreValid_mustThrowAddedUserMessage() throws IOException {
     main.run(new String[] {"validname"});
     List<String> logLines = Files.readAllLines(Paths.get(logpath));
     String logContent = String.join("\n", logLines);
@@ -33,7 +33,7 @@ public class MainTest {
   }
 
   @Test
-  public void RunTest_whenArgsAreVoid_mustNotThrowException() {
+  void RunTest_whenArgsAreVoid_mustNotThrowException() {
     String[] args = {};
     assertDoesNotThrow(
         () -> {
@@ -42,7 +42,7 @@ public class MainTest {
   }
 
   @Test
-  public void MainTest_whenArgsIsShortOrLong_mustThrowMessage() throws IOException {
+  void MainTest_whenArgsIsShortOrLong_mustThrowMessage() throws IOException {
 
     Main.main(new String[] {"joao"});
 
