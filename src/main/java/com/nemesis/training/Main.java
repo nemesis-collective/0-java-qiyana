@@ -5,18 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Main {
-  public static void main(String[] args) {
-    Main main = new Main();
+  public static void main(final String[] args) {
+    final Main main = new Main();
     main.run(args);
   }
 
-  public void run(String[] args) {
+  public void run(final String[] args) {
     try {
-      String username = args[0];
+      final String username = args[0];
       if (NameValidator.isValidName(username)) {
-        Connection conn = UsersStore.getConnection("application.properties");
-        UsersStore usersStore = new UsersStore(conn);
-        User user = usersStore.createUser(username);
+        final Connection conn = UsersStore.getConnection("application.properties");
+        final UsersStore usersStore = new UsersStore(conn);
+        final User user = usersStore.createUser(username);
         usersStore.verifyUserCreation(user.getId());
       } else {
         log.error(

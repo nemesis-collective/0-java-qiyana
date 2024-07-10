@@ -12,15 +12,15 @@ class UsersStoreTest {
 
   @Test
   void createTableTestShouldCreateTable() throws SQLException {
-    Connection conn = UsersStore.getConnection(TEST_PATH);
-    UsersStore userTest = new UsersStore(conn);
+    final Connection conn = UsersStore.getConnection(TEST_PATH);
+    final UsersStore userTest = new UsersStore(conn);
     assertNotNull(userTest);
     conn.close();
   }
 
   @Test
   void createTableTestWhenStatementCreationFailsShouldNotThrowException() throws SQLException {
-    Connection connMock = mock(Connection.class);
+    final Connection connMock = mock(Connection.class);
     when(connMock.createStatement()).thenThrow(new SQLException());
     assertDoesNotThrow(
         () -> {
@@ -30,8 +30,8 @@ class UsersStoreTest {
 
   @Test
   void createTableTestWhenStatementExecuteFailsShouldNotThrowException() throws SQLException {
-    Connection connMock = mock(Connection.class);
-    Statement statementMock = mock(Statement.class);
+    final Connection connMock = mock(Connection.class);
+    final Statement statementMock = mock(Statement.class);
 
     when(connMock.createStatement()).thenReturn(statementMock);
 
@@ -45,9 +45,9 @@ class UsersStoreTest {
 
   @Test
   void createUserTestWhenNamePassedShouldCreateUser() throws SQLException {
-    Connection conn = UsersStore.getConnection(TEST_PATH);
-    UsersStore usersStore = new UsersStore(conn);
-    User userTest = usersStore.createUser(VALID_NAME);
+    final Connection conn = UsersStore.getConnection(TEST_PATH);
+    final UsersStore usersStore = new UsersStore(conn);
+    final User userTest = usersStore.createUser(VALID_NAME);
     assertNotNull(userTest);
     conn.close();
   }
@@ -56,8 +56,8 @@ class UsersStoreTest {
   void createUserTestWhenPreparedStatementCreationFailsShouldNotThrowSqlException()
       throws SQLException {
 
-    Connection connMock = mock(Connection.class);
-    Statement statementMock = mock(Statement.class);
+    final Connection connMock = mock(Connection.class);
+    final Statement statementMock = mock(Statement.class);
 
     when(connMock.createStatement()).thenReturn(statementMock);
     when(statementMock.execute(UsersStore.CREATE_TABLE_QUERY)).thenReturn(true);
@@ -65,7 +65,7 @@ class UsersStoreTest {
     when(connMock.prepareStatement(UsersStore.INSERT_QUERY, Statement.RETURN_GENERATED_KEYS))
         .thenThrow(new SQLException());
 
-    UsersStore usersTest = new UsersStore(connMock);
+    final UsersStore usersTest = new UsersStore(connMock);
 
     assertDoesNotThrow(
         () -> {
@@ -76,20 +76,20 @@ class UsersStoreTest {
   @Test
   void createUserTestWhenPreparedStatementExecuteSetStringFailsShouldNotThrowSqlException()
       throws SQLException {
-    Connection connMock = mock(Connection.class);
-    Statement statementMock = mock(Statement.class);
+    final Connection connMock = mock(Connection.class);
+    final Statement statementMock = mock(Statement.class);
 
     when(connMock.createStatement()).thenReturn(statementMock);
     when(statementMock.execute(anyString())).thenReturn(true);
 
-    PreparedStatement prep = mock(PreparedStatement.class);
+    final PreparedStatement prep = mock(PreparedStatement.class);
 
     when(connMock.prepareStatement(UsersStore.INSERT_QUERY, Statement.RETURN_GENERATED_KEYS))
         .thenReturn(prep);
 
     doThrow(new SQLException()).when(prep).setString(anyInt(), anyString());
 
-    UsersStore usersTest = new UsersStore(connMock);
+    final UsersStore usersTest = new UsersStore(connMock);
 
     assertDoesNotThrow(
         () -> {
@@ -100,19 +100,19 @@ class UsersStoreTest {
   @Test
   void createUserTestWhenPreparedStatementExecuteUpdateFailsShouldNotThrowSqlException()
       throws SQLException {
-    Connection connMock = mock(Connection.class);
-    Statement statementMock = mock(Statement.class);
+    final Connection connMock = mock(Connection.class);
+    final Statement statementMock = mock(Statement.class);
 
     when(connMock.createStatement()).thenReturn(statementMock);
     when(statementMock.execute(anyString())).thenReturn(true);
 
-    PreparedStatement prep = mock(PreparedStatement.class);
+    final PreparedStatement prep = mock(PreparedStatement.class);
 
     when(connMock.prepareStatement(UsersStore.INSERT_QUERY, Statement.RETURN_GENERATED_KEYS))
         .thenReturn(prep);
     doThrow(new SQLException()).when(prep).executeUpdate();
 
-    UsersStore usersStore = new UsersStore(connMock);
+    final UsersStore usersStore = new UsersStore(connMock);
 
     assertDoesNotThrow(
         () -> {
@@ -122,9 +122,9 @@ class UsersStoreTest {
 
   @Test
   void getGeneratedIdTestWhenGetGeneratedKeysFailsShouldNotThrowException() throws SQLException {
-    Connection conn = UsersStore.getConnection(TEST_PATH);
-    UsersStore usersStore = new UsersStore(conn);
-    PreparedStatement prep = mock(PreparedStatement.class);
+    final Connection conn = UsersStore.getConnection(TEST_PATH);
+    final UsersStore usersStore = new UsersStore(conn);
+    final PreparedStatement prep = mock(PreparedStatement.class);
 
     when(prep.getGeneratedKeys()).thenThrow(new SQLException());
 
@@ -137,11 +137,11 @@ class UsersStoreTest {
 
   @Test
   void getGeneratedIdTestWhenNextFailsShouldNotThrowException() throws SQLException {
-    Connection conn = UsersStore.getConnection(TEST_PATH);
-    UsersStore usersStore = new UsersStore(conn);
+    final Connection conn = UsersStore.getConnection(TEST_PATH);
+    final UsersStore usersStore = new UsersStore(conn);
 
-    PreparedStatement prep = mock(PreparedStatement.class);
-    ResultSet resultMock = mock(ResultSet.class);
+    final PreparedStatement prep = mock(PreparedStatement.class);
+    final ResultSet resultMock = mock(ResultSet.class);
 
     when(prep.getGeneratedKeys()).thenReturn(resultMock);
     when(resultMock.next()).thenThrow(new SQLException());
@@ -154,11 +154,11 @@ class UsersStoreTest {
 
   @Test
   void getGeneratedIdTestWhenNextIsFalseShouldReturn0() throws SQLException {
-    Connection conn = UsersStore.getConnection(TEST_PATH);
-    UsersStore usersStore = new UsersStore(conn);
+    final Connection conn = UsersStore.getConnection(TEST_PATH);
+    final UsersStore usersStore = new UsersStore(conn);
 
-    PreparedStatement prep = mock(PreparedStatement.class);
-    ResultSet resultMock = mock(ResultSet.class);
+    final PreparedStatement prep = mock(PreparedStatement.class);
+    final ResultSet resultMock = mock(ResultSet.class);
 
     when(prep.getGeneratedKeys()).thenReturn(resultMock);
     when(resultMock.next()).thenReturn(false);
@@ -168,7 +168,7 @@ class UsersStoreTest {
 
   @Test
   void getConnectionTestWhenFileIsPassedShouldReturnConnection() throws SQLException {
-    Connection conn = UsersStore.getConnection(TEST_PATH);
+    final Connection conn = UsersStore.getConnection(TEST_PATH);
     assertNotNull(conn);
     conn.close();
   }

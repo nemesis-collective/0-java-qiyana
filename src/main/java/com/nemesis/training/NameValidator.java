@@ -9,11 +9,11 @@ public class NameValidator {
       return false;
     }
 
-    String regex = ".*[0-9A-Z\\W_].*";
+    final String regex = ".*[0-9A-Z\\W_].*";
 
-    Pattern pattern = Pattern.compile(regex);
+    final Pattern pattern = Pattern.compile(regex);
 
-    Matcher matcher = pattern.matcher(name);
+    final Matcher matcher = pattern.matcher(name);
 
     return !matcher.matches();
   }

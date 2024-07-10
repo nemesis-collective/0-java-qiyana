@@ -16,7 +16,7 @@ class NameValidatorTest {
 
   @ParameterizedTest
   @ValueSource(strings = {"João123", "joao", "abcdefghijklmnopqrstuvwxyz"})
-  void nameValidatorTestWhenNameIsInvalidMustReturnFalse(String name) {
+  void nameValidatorTestWhenNameIsInvalidMustReturnFalse(final String name) {
     assertFalse(NameValidator.isValidName(name));
   }
 }

@@ -10,12 +10,12 @@ public class UserBuild {
     return new UserBuild();
   }
 
-  public UserBuild id(Optional<Long> id) {
+  public UserBuild id(final Optional<Long> id) {
     this.id = id.orElse(null);
     return this;
   }
 
-  public UserBuild name(String name) {
+  public UserBuild name(final String name) {
     this.name = name;
     return this;
   }

@@ -16,7 +16,7 @@ class ConfigTest {
 
   @Test
   void getPropertiesTestWhenParamsValidShouldReturnProperties() {
-    Properties properties = config.getProperties("test.application.properties");
+    final Properties properties = config.getProperties("test.application.properties");
     assertEquals("admin", properties.getProperty("db.USERNAME"));
   }
 
@@ -30,7 +30,7 @@ class ConfigTest {
 
   @Test
   void getPropertiesTestWhenPropertiesNameIsVoidShouldReturnVoidProperties() {
-    Properties prop = config.getProperties("");
+    final Properties prop = config.getProperties("");
     assertEquals("{}", prop.toString());
   }
 }

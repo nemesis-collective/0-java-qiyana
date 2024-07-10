@@ -26,15 +26,15 @@ class MainTest {
   @Test
   void runTestWhenArgsAreValidMustThrowAddedUserMessage() throws IOException {
     main.run(new String[] {"validname"});
-    List<String> logLines = Files.readAllLines(Paths.get(LOG_PATH));
-    String logContent = String.join("\n", logLines);
+    final List<String> logLines = Files.readAllLines(Paths.get(LOG_PATH));
+    final String logContent = String.join("\n", logLines);
 
     assertFalse(logContent.contains("Failed to save name to database."));
   }
 
   @Test
   void runTestWhenArgsAreVoidMustNotThrowException() {
-    String[] args = {};
+    final String[] args = {};
     assertDoesNotThrow(
         () -> {
           main.run(args);
@@ -46,8 +46,8 @@ class MainTest {
 
     Main.main(new String[] {"joao"});
 
-    List<String> logLines = Files.readAllLines(Paths.get(LOG_PATH));
-    String logContent = String.join("\n", logLines);
+    final List<String> logLines = Files.readAllLines(Paths.get(LOG_PATH));
+    final String logContent = String.join("\n", logLines);
 
     assertTrue(
         logContent.contains(

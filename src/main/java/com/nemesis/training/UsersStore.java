@@ -15,7 +15,7 @@ public class UsersStore {
           + "id LONG AUTO_INCREMENT, "
           + "name VARCHAR(255) NOT NULL)";
 
-  protected UsersStore(Connection connection) {
+  protected UsersStore(final Connection connection) {
     this.config = Config.getConfig();
     this.conn = connection;
     this.createTable();
@@ -36,7 +36,7 @@ public class UsersStore {
    * @param name username who will be added at database.
    * @return a User Object.
    */
-  public User createUser(String name) {
+  public User createUser(final String name) {
 
     long generatedId = 0;
 
@@ -58,8 +58,8 @@ public class UsersStore {
    * @param file name of the properties file who got the variables to connect at database.
    * @return a Connection Object.
    */
-  public static Connection getConnection(String file) {
-    Config config = Config.getConfig();
+  public static Connection getConnection(final String file) {
+    final Config config = Config.getConfig();
     Connection conn = null;
     try {
       config.getProperties(file);
@@ -77,10 +77,10 @@ public class UsersStore {
    * @param prep a PreparedStatement Object created by a Connection.
    * @return the id of the last name added to database.
    */
-  public long getGeneratedId(PreparedStatement prep) {
+  public long getGeneratedId(final PreparedStatement prep) {
     long lastId = 0;
     try {
-      ResultSet generatedKeys = prep.getGeneratedKeys();
+      final ResultSet generatedKeys = prep.getGeneratedKeys();
       if (generatedKeys.next()) {
         lastId = generatedKeys.getInt(1);
       }
@@ -91,7 +91,7 @@ public class UsersStore {
     return lastId;
   }
 
-  public void verifyUserCreation(long id) {
+  public void verifyUserCreation(final long id) {
     if (id == 0) {
       log.error("Failed to save name to database.");
     } else {

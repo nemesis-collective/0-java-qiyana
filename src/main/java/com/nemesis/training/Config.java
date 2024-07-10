@@ -32,8 +32,8 @@ public class Config {
     return properties.getProperty("db.PASSWORD");
   }
 
-  public Properties getProperties(String propertiesName) {
-    Properties prop = new Properties();
+  public Properties getProperties(final String propertiesName) {
+    final Properties prop = new Properties();
     if (!Objects.equals(propertiesName, "")) {
       try (InputStream inputStream =
           Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {
