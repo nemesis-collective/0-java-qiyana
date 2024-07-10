@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 public class UsersStore {
   private Config config;
   private Connection conn;
-  public final String INSERT_QUERY = "INSERT INTO USERS (name) VALUES (?)";
-  public final String CREATE_TABLE_QUERY =
+  public static final String INSERT_QUERY = "INSERT INTO USERS (name) VALUES (?)";
+  public static final String CREATE_TABLE_QUERY =
       "CREATE TABLE IF NOT EXISTS USERS ("
           + "id LONG AUTO_INCREMENT, "
           + "name VARCHAR(255) NOT NULL)";
@@ -22,7 +22,7 @@ public class UsersStore {
   }
 
   /** Executes a CREATE TABLE query, but only if the table doesn't exist yet. */
-  public void createTable() {
+  private void createTable() {
     try (Statement stmt = this.conn.createStatement()) {
       stmt.execute(CREATE_TABLE_QUERY);
     } catch (SQLException e) {

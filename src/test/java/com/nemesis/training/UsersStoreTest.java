@@ -7,13 +7,8 @@ import java.sql.*;
 import org.junit.jupiter.api.Test;
 
 class UsersStoreTest {
-  private final String testPath = "test.application.properties";
-  private final String validName = "joaopaulo";
-  private final String INSERT_QUERY = "INSERT INTO USERS (name) VALUES (?)";
-  private final String CREATE_TABLE_QUERY =
-      "CREATE TABLE IF NOT EXISTS USERS ("
-          + "id LONG AUTO_INCREMENT, "
-          + "name VARCHAR(255) NOT NULL)";
+  private static final String testPath = "test.application.properties";
+  private static final String validName = "joaopaulo";
 
   @Test
   void createTableTestShouldCreateTable() throws SQLException {
@@ -40,7 +35,7 @@ class UsersStoreTest {
 
     when(connMock.createStatement()).thenReturn(statementMock);
 
-    when(statementMock.execute(CREATE_TABLE_QUERY)).thenThrow(new SQLException());
+    when(statementMock.execute(UsersStore.CREATE_TABLE_QUERY)).thenThrow(new SQLException());
 
     assertDoesNotThrow(
         () -> {
@@ -65,9 +60,9 @@ class UsersStoreTest {
     Statement statementMock = mock(Statement.class);
 
     when(connMock.createStatement()).thenReturn(statementMock);
-    when(statementMock.execute(CREATE_TABLE_QUERY)).thenReturn(true);
+    when(statementMock.execute(UsersStore.CREATE_TABLE_QUERY)).thenReturn(true);
 
-    when(connMock.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS))
+    when(connMock.prepareStatement(UsersStore.INSERT_QUERY, Statement.RETURN_GENERATED_KEYS))
         .thenThrow(new SQLException());
 
     UsersStore usersTest = new UsersStore(connMock);
@@ -89,7 +84,8 @@ class UsersStoreTest {
 
     PreparedStatement prep = mock(PreparedStatement.class);
 
-    when(connMock.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
+    when(connMock.prepareStatement(UsersStore.INSERT_QUERY, Statement.RETURN_GENERATED_KEYS))
+        .thenReturn(prep);
 
     doThrow(new SQLException()).when(prep).setString(anyInt(), anyString());
 
@@ -112,7 +108,8 @@ class UsersStoreTest {
 
     PreparedStatement prep = mock(PreparedStatement.class);
 
-    when(connMock.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)).thenReturn(prep);
+    when(connMock.prepareStatement(UsersStore.INSERT_QUERY, Statement.RETURN_GENERATED_KEYS))
+        .thenReturn(prep);
     doThrow(new SQLException()).when(prep).executeUpdate();
 
     UsersStore usersStore = new UsersStore(connMock);
