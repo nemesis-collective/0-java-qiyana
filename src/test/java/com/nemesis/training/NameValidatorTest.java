@@ -11,14 +11,12 @@ public class NameValidatorTest {
 
   @Test
   void NameValidatorTest_whenNameIsValid_mustReturnTrue() {
-    var response = NameValidator.isValidName("joaopaulo");
-    assertTrue(response);
+    assertTrue(NameValidator.isValidName("joaopaulo"));
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"João123", "joao", "abcdefghijklmnopqrstuvwxyz"})
   void NameValidatorTest_whenNameIsInvalid_mustReturnFalse(String name) {
-    var response = NameValidator.isValidName(name);
-    assertFalse(response);
+    assertFalse(NameValidator.isValidName(name));
   }
 }
