@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 
 class MainTest {
   private final Main main = new Main();
-  private final String logpath = "logs/app.log";
+  private static final String LOG_PATH = "logs/app.log";
 
   @BeforeEach
   public void tearDown() throws IOException {
     Files.write(
-        Paths.get(logpath),
+        Paths.get(LOG_PATH),
         new byte[0],
         StandardOpenOption.TRUNCATE_EXISTING,
         StandardOpenOption.CREATE);
@@ -26,7 +26,7 @@ class MainTest {
   @Test
   void runTestWhenArgsAreValidMustThrowAddedUserMessage() throws IOException {
     main.run(new String[] {"validname"});
-    List<String> logLines = Files.readAllLines(Paths.get(logpath));
+    List<String> logLines = Files.readAllLines(Paths.get(LOG_PATH));
     String logContent = String.join("\n", logLines);
 
     assertFalse(logContent.contains("Failed to save name to database."));
@@ -46,7 +46,7 @@ class MainTest {
 
     Main.main(new String[] {"joao"});
 
-    List<String> logLines = Files.readAllLines(Paths.get(logpath));
+    List<String> logLines = Files.readAllLines(Paths.get(LOG_PATH));
     String logContent = String.join("\n", logLines);
 
     assertTrue(
