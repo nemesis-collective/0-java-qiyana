@@ -10,13 +10,13 @@ import org.junit.jupiter.params.provider.ValueSource;
 class NameValidatorTest {
 
   @Test
-  void NameValidatorTest_whenNameIsValid_mustReturnTrue() {
+  void nameValidatorTestWhenNameIsValidMustReturnTrue() {
     assertTrue(NameValidator.isValidName("joaopaulo"));
   }
 
   @ParameterizedTest
   @ValueSource(strings = {"João123", "joao", "abcdefghijklmnopqrstuvwxyz"})
-  void NameValidatorTest_whenNameIsInvalid_mustReturnFalse(String name) {
+  void nameValidatorTestWhenNameIsInvalidMustReturnFalse(String name) {
     assertFalse(NameValidator.isValidName(name));
   }
 }

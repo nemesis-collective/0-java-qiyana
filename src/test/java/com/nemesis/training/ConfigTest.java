@@ -15,13 +15,13 @@ class ConfigTest {
   }
 
   @Test
-  void getPropertiesTest_whenParamsValid_shouldReturnProperties() {
+  void getPropertiesTestWhenParamsValidShouldReturnProperties() {
     Properties properties = config.getProperties("test.application.properties");
     assertEquals("admin", properties.getProperty("db.USERNAME"));
   }
 
   @Test
-  void getPropertiesTest_whenParamsInvalid_shouldNotThrowException() {
+  void getPropertiesTestWhenParamsInvalidShouldNotThrowException() {
     assertDoesNotThrow(
         () -> {
           config.getProperties("non-existent.properties");
@@ -29,7 +29,7 @@ class ConfigTest {
   }
 
   @Test
-  void getPropertiesTest_whenPropertiesNameIsVoid_shouldReturnVoidProperties() {
+  void getPropertiesTestWhenPropertiesNameIsVoidShouldReturnVoidProperties() {
     Properties prop = config.getProperties("");
     assertEquals("{}", prop.toString());
   }

@@ -15,7 +15,7 @@ class UsersStoreTest {
           + "name VARCHAR(255) NOT NULL)";
 
   @Test
-  void createTableTest_shouldCreateTable() throws SQLException {
+  void createTableTestShouldCreateTable() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore userTest = new UsersStore(conn);
     assertNotNull(userTest);
@@ -23,7 +23,7 @@ class UsersStoreTest {
   }
 
   @Test
-  void createTableTest_whenStatementCreationFails_shouldNotThrowException() throws SQLException {
+  void createTableTestWhenStatementCreationFailsShouldNotThrowException() throws SQLException {
     Connection connMock = mock(Connection.class);
     when(connMock.createStatement()).thenThrow(new SQLException());
     assertDoesNotThrow(
@@ -33,7 +33,7 @@ class UsersStoreTest {
   }
 
   @Test
-  void createTableTest_whenStatementExecuteFails_shouldNotThrowException() throws SQLException {
+  void createTableTestWhenStatementExecuteFailsShouldNotThrowException() throws SQLException {
     Connection connMock = mock(Connection.class);
     Statement statementMock = mock(Statement.class);
 
@@ -48,7 +48,7 @@ class UsersStoreTest {
   }
 
   @Test
-  void createUserTest_whenNamePassed_shouldCreateUser() throws SQLException {
+  void createUserTestWhenNamePassedShouldCreateUser() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
     User userTest = usersStore.createUser("joaopaulo");
@@ -57,7 +57,7 @@ class UsersStoreTest {
   }
 
   @Test
-  void createUserTest_whenPreparedStatementCreationFails_shouldNotThrowSqlException()
+  void createUserTestWhenPreparedStatementCreationFailsShouldNotThrowSqlException()
       throws SQLException {
 
     Connection connMock = mock(Connection.class);
@@ -78,7 +78,7 @@ class UsersStoreTest {
   }
 
   @Test
-  void createUserTest_whenPreparedStatementExecuteSetStringFails_shouldNotThrowSqlException()
+  void createUserTestWhenPreparedStatementExecuteSetStringFailsShouldNotThrowSqlException()
       throws SQLException {
     Connection connMock = mock(Connection.class);
     Statement statementMock = mock(Statement.class);
@@ -101,7 +101,7 @@ class UsersStoreTest {
   }
 
   @Test
-  void createUserTest_whenPreparedStatementExecuteUpdateFails_shouldNotThrowSqlException()
+  void createUserTestWhenPreparedStatementExecuteUpdateFailsShouldNotThrowSqlException()
       throws SQLException {
     Connection connMock = mock(Connection.class);
     Statement statementMock = mock(Statement.class);
@@ -123,7 +123,7 @@ class UsersStoreTest {
   }
 
   @Test
-  void getGeneratedIdTest_whenGetGeneratedKeysFails_shouldNotThrowException() throws SQLException {
+  void getGeneratedIdTestWhenGetGeneratedKeysFailsShouldNotThrowException() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
     PreparedStatement prep = mock(PreparedStatement.class);
@@ -138,7 +138,7 @@ class UsersStoreTest {
   }
 
   @Test
-  void getGeneratedIdTest_whenNextFails_shouldNotThrowException() throws SQLException {
+  void getGeneratedIdTestWhenNextFailsShouldNotThrowException() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
 
@@ -155,7 +155,7 @@ class UsersStoreTest {
   }
 
   @Test
-  void getGeneratedIdTest_whenNextIsFalse_shouldReturn0() throws SQLException {
+  void getGeneratedIdTestWhenNextIsFalseShouldReturn0() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     UsersStore usersStore = new UsersStore(conn);
 
@@ -169,14 +169,14 @@ class UsersStoreTest {
   }
 
   @Test
-  void getConnectionTest_whenFileIsPassed_shouldReturnConnection() throws SQLException {
+  void getConnectionTestWhenFileIsPassedShouldReturnConnection() throws SQLException {
     Connection conn = UsersStore.getConnection("test.application.properties");
     assertNotNull(conn);
     conn.close();
   }
 
   @Test
-  void getConnectionTest_whenPropertiesIsWrong_shouldNotThrowException() {
+  void getConnectionTestWhenPropertiesIsWrongShouldNotThrowException() {
     assertDoesNotThrow(
         () -> {
           UsersStore.getConnection("invalid.application.properties");

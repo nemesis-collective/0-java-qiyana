@@ -24,7 +24,7 @@ class MainTest {
   }
 
   @Test
-  void RunTest_whenArgsAreValid_mustThrowAddedUserMessage() throws IOException {
+  void runTestWhenArgsAreValidMustThrowAddedUserMessage() throws IOException {
     main.run(new String[] {"validname"});
     List<String> logLines = Files.readAllLines(Paths.get(logpath));
     String logContent = String.join("\n", logLines);
@@ -33,7 +33,7 @@ class MainTest {
   }
 
   @Test
-  void RunTest_whenArgsAreVoid_mustNotThrowException() {
+  void runTestWhenArgsAreVoidMustNotThrowException() {
     String[] args = {};
     assertDoesNotThrow(
         () -> {
@@ -42,7 +42,7 @@ class MainTest {
   }
 
   @Test
-  void MainTest_whenArgsIsShortOrLong_mustThrowMessage() throws IOException {
+  void mainTestWhenArgsIsShortOrLongMustThrowMessage() throws IOException {
 
     Main.main(new String[] {"joao"});
 
