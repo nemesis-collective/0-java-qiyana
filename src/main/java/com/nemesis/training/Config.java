@@ -8,14 +8,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Config {
-  private static Config config;
+  private static Config conf;
   private static Properties properties;
 
+  protected Config() {}
+
   public static Config getConfig() {
-    if (config == null) {
-      config = new Config();
+    if (conf == null) {
+      conf = new Config();
     }
-    return config;
+    return conf;
   }
 
   public String getUrl() {
