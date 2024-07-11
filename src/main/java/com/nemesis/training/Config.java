@@ -7,19 +7,19 @@ import java.util.Properties;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Config {
-  private static Config conf;
+public final class Config {
   private static Properties properties;
 
-  protected Config() {
+  private Config() {
     // This constructor is intentionally empty.
   }
 
+  private static final class ConfigHelper {
+    private static final Config INSTANCE = new Config();
+  }
+
   public static Config getConfig() {
-    if (conf == null) {
-      conf = new Config();
-    }
-    return conf;
+    return ConfigHelper.INSTANCE;
   }
 
   public String getUrl() {
