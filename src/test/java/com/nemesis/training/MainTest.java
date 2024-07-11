@@ -29,7 +29,7 @@ class MainTest {
 
   @Test
   void runTestWhenArgsAreValidMustThrowAddedUserMessage() throws IOException {
-    main.run(new String[] {"validname"});
+    main.run("validname");
     final List<String> logLines = Files.readAllLines(Paths.get(LOG_PATH));
     final String logContent = String.join("\n", logLines);
 
