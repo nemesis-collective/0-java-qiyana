@@ -15,7 +15,7 @@ public class Main {
     main.run(args);
   }
 
-  public void run(final String[] args) {
+  public void run(final String... args) {
     try {
       final String username = args[0];
       if (NameValidator.isValidName(username)) {
