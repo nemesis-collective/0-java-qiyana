@@ -8,9 +8,8 @@ public final class NameValidator {
   private NameValidator() {}
 
   public static boolean isValidName(final String name) {
-    if (name.length() < 8 || name.length() > 25) {
-      return false;
-    }
+
+    final boolean isValidLength = name.length() >= 8 && name.length() <= 25;
 
     final String regex = ".*[0-9A-Z\\W_].*";
 
@@ -18,6 +17,6 @@ public final class NameValidator {
 
     final Matcher matcher = pattern.matcher(name);
 
-    return !matcher.matches();
+    return isValidLength && !matcher.matches();
   }
 }
