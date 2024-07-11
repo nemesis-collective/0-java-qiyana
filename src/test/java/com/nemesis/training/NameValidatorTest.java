@@ -9,6 +9,10 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class NameValidatorTest {
 
+  protected NameValidatorTest() {
+    // This constructor is intentionally empty.
+  }
+
   @Test
   void nameValidatorTestWhenNameIsValidMustReturnTrue() {
     assertTrue(NameValidator.isValidName("joaopaulo"));

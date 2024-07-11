@@ -9,6 +9,10 @@ import org.junit.jupiter.api.Test;
 class ConfigTest {
   private static Config config;
 
+  protected ConfigTest() {
+    // This constructor is intentionally empty.
+  }
+
   @BeforeAll
   static void setUp() {
     config = Config.getConfig();
@@ -17,7 +21,8 @@ class ConfigTest {
   @Test
   void getPropertiesTestWhenParamsValidShouldReturnProperties() {
     final Properties properties = config.getProperties("test.application.properties");
-    assertEquals("admin", properties.getProperty("db.USERNAME"));
+    assertEquals(
+        "admin value must be equals db.username ", "admin", properties.getProperty("db.USERNAME"));
   }
 
   @Test

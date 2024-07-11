@@ -14,6 +14,10 @@ class MainTest {
   private final Main main = new Main();
   private static final String LOG_PATH = "logs/app.log";
 
+  protected MainTest() {
+    // This constructor is intentionally empty.
+  }
+
   @BeforeEach
   public void tearDown() throws IOException {
     Files.write(

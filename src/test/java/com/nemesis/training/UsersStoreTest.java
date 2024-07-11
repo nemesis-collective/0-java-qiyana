@@ -10,6 +10,10 @@ class UsersStoreTest {
   private static final String TEST_PATH = "test.application.properties";
   private static final String VALID_NAME = "joaopaulo";
 
+  protected UsersStoreTest() {
+    // This constructor is intentionally empty.
+  }
+
   @Test
   void createTableTestShouldCreateTable() throws SQLException {
     final Connection conn = UsersStore.getConnection(TEST_PATH);

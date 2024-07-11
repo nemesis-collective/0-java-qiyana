@@ -11,7 +11,9 @@ public class Config {
   private static Config conf;
   private static Properties properties;
 
-  protected Config() {}
+  protected Config() {
+    // This constructor is intentionally empty.
+  }
 
   public static Config getConfig() {
     if (conf == null) {
