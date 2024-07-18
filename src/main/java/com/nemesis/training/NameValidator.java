@@ -2,10 +2,10 @@ package com.nemesis.training;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public final class NameValidator {
-
-  private NameValidator() {}
 
   public static boolean isValidName(final String name) {
 

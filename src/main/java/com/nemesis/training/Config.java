@@ -4,15 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.Properties;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@NoArgsConstructor
 public final class Config {
   private static Properties properties;
-
-  private Config() {
-    // This constructor is intentionally empty.
-  }
 
   private static final class ConfigHelper {
     private static final Config INSTANCE = new Config();

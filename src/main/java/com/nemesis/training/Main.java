@@ -5,11 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Main {
-
-  protected Main() {
-    // This constructor is intentionally empty.
-  }
-
   public static void main(final String[] args) {
     final Main main = new Main();
     main.run(args);

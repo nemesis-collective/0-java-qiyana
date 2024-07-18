@@ -1,14 +1,12 @@
 package com.nemesis.training;
 
 import java.util.Optional;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class UserBuild {
   private long id;
   private String name;
-
-  protected UserBuild() {
-    // This constructor is intentionally empty.
-  }
 
   public static UserBuild builder() {
     return new UserBuild();
