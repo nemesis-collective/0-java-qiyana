@@ -10,31 +10,35 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MainTest {
-  Main main = new Main();
-  String logpath = "logs/app.log";
+class MainTest {
+  private final Main main = new Main();
+  private static final String LOG_PATH = "logs/app.log";
+
+  protected MainTest() {
+    // This constructor is intentionally empty.
+  }
 
   @BeforeEach
   public void tearDown() throws IOException {
     Files.write(
-        Paths.get(logpath),
+        Paths.get(LOG_PATH),
         new byte[0],
         StandardOpenOption.TRUNCATE_EXISTING,
         StandardOpenOption.CREATE);
   }
 
   @Test
-  public void RunTest_whenArgsAreValid_mustThrowAddedUserMessage() throws IOException {
-    main.run(new String[] {"validname"});
-    List<String> logLines = Files.readAllLines(Paths.get(logpath));
-    String logContent = String.join("\n", logLines);
+  void runTestWhenArgsAreValidMustThrowAddedUserMessage() throws IOException {
+    main.run("validname");
+    final List<String> logLines = Files.readAllLines(Paths.get(LOG_PATH));
+    final String logContent = String.join("\n", logLines);
 
     assertFalse(logContent.contains("Failed to save name to database."));
   }
 
   @Test
-  public void RunTest_whenArgsAreVoid_mustNotThrowException() {
-    String[] args = {};
+  void runTestWhenArgsAreVoidMustNotThrowException() {
+    final String[] args = {};
     assertDoesNotThrow(
         () -> {
           main.run(args);
@@ -42,12 +46,12 @@ public class MainTest {
   }
 
   @Test
-  public void MainTest_whenArgsIsShortOrLong_mustThrowMessage() throws IOException {
+  void mainTestWhenArgsIsShortOrLongMustThrowMessage() throws IOException {
 
     Main.main(new String[] {"joao"});
 
-    List<String> logLines = Files.readAllLines(Paths.get(logpath));
-    String logContent = String.join("\n", logLines);
+    final List<String> logLines = Files.readAllLines(Paths.get(LOG_PATH));
+    final String logContent = String.join("\n", logLines);
 
     assertTrue(
         logContent.contains(

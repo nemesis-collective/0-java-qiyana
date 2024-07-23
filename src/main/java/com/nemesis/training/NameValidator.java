@@ -2,19 +2,21 @@ package com.nemesis.training;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lombok.NoArgsConstructor;
 
-public class NameValidator {
-  public static boolean isValidName(String name) {
-    if (name.length() < 8 || name.length() > 25) {
-      return false;
-    }
+@NoArgsConstructor
+public final class NameValidator {
 
-    String REGEX = ".*[0-9A-Z\\W_].*";
+  public static boolean isValidName(final String name) {
 
-    Pattern pattern = Pattern.compile(REGEX);
+    final boolean isValidLength = name.length() >= 8 && name.length() <= 25;
 
-    Matcher matcher = pattern.matcher(name);
+    final String regex = ".*[0-9A-Z\\W_].*";
 
-    return !matcher.matches();
+    final Pattern pattern = Pattern.compile(regex);
+
+    final Matcher matcher = pattern.matcher(name);
+
+    return isValidLength && !matcher.matches();
   }
 }

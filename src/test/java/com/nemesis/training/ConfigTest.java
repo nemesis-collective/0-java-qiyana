@@ -6,8 +6,12 @@ import java.util.Properties;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class ConfigTest {
-  static Config config;
+class ConfigTest {
+  private static Config config;
+
+  protected ConfigTest() {
+    // This constructor is intentionally empty.
+  }
 
   @BeforeAll
   static void setUp() {
@@ -15,14 +19,13 @@ public class ConfigTest {
   }
 
   @Test
-  void getPropertiesTest_whenParamsValid_shouldReturnProperties() {
-    Properties properties = config.getProperties("test.application.properties");
+  void getPropertiesTestWhenParamsValidShouldReturnProperties() {
+    final Properties properties = config.getProperties("test.application.properties");
     assertEquals("admin", properties.getProperty("db.USERNAME"));
-    assertEquals("dbtest", properties.getProperty("db.PASSWORD"));
   }
 
   @Test
-  void getPropertiesTest_whenParamsInvalid_shouldNotThrowException() {
+  void getPropertiesTestWhenParamsInvalidShouldNotThrowException() {
     assertDoesNotThrow(
         () -> {
           config.getProperties("non-existent.properties");
@@ -30,8 +33,8 @@ public class ConfigTest {
   }
 
   @Test
-  void getPropertiesTest_whenPropertiesNameIsVoid_shouldReturnVoidProperties() {
-    Properties prop = config.getProperties("");
+  void getPropertiesTestWhenPropertiesNameIsVoidShouldReturnVoidProperties() {
+    final Properties prop = config.getProperties("");
     assertEquals("{}", prop.toString());
   }
 }

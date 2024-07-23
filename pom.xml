@@ -12,12 +12,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.github.ekryd.sortpom/sortpom-sorter -->
-        <dependency>
-            <groupId>com.github.ekryd.sortpom</groupId>
-            <artifactId>sortpom-sorter</artifactId>
-            <version>4.0.0</version>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -72,11 +66,15 @@
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
                 <version>4.0.0</version>
+                <configuration>
+                    <lineSeparator>\n</lineSeparator>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>sort</goal>
                         </goals>
+                        <phase>validate</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -89,8 +87,19 @@
                         <goals>
                             <goal>format</goal>
                         </goals>
+                        <phase>verify</phase>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.23.0</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>category/java/bestpractices.xml</ruleset>
+                    </rulesets>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
