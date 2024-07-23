@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsersStore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.nemesis.training</a> &gt; <a href="index.source.html" class="el_package">com.nemesis.training</a> &gt; <span class="el_source">UsersStore.java</span></div><h1>UsersStore.java</h1><pre class="source lang-java linenums">package com.nemesis.training;
+
+import java.sql.*;
+import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
+
+/** Class responsible for database operations. */
+<span class="nc" id="L8">@Slf4j</span>
+public class UsersStore {
+  private final Connection conn;
+  public static final String INSERT_QUERY = &quot;INSERT INTO USERS (name) VALUES (?)&quot;;
+  public static final String CREATE_TABLE_QUERY =
+      &quot;CREATE TABLE IF NOT EXISTS USERS (&quot;
+          + &quot;id LONG AUTO_INCREMENT, &quot;
+          + &quot;name VARCHAR(255) NOT NULL)&quot;;
+
+<span class="nc" id="L17">  protected UsersStore(final Connection connection) {</span>
+<span class="nc" id="L18">    this.conn = connection;</span>
+<span class="nc" id="L19">    this.createTable();</span>
+<span class="nc" id="L20">  }</span>
+
+  /** Executes a CREATE TABLE query, but only if the table doesn't exist yet. */
+  private void createTable() {
+<span class="nc" id="L24">    try (Statement stmt = this.conn.createStatement()) {</span>
+<span class="nc" id="L25">      stmt.execute(CREATE_TABLE_QUERY);</span>
+<span class="nc" id="L26">    } catch (SQLException e) {</span>
+<span class="nc" id="L27">      log.error(&quot;An error occurred while creating the table in the database.{}&quot;, e);</span>
+<span class="nc" id="L28">    }</span>
+<span class="nc" id="L29">  }</span>
+
+  /**
+   * Uses an SQL query to insert a username string into the previously created table.
+   *
+   * @param name username who will be added at database.
+   * @return a User Object.
+   */
+  public User createUser(final String name) {
+
+<span class="nc" id="L39">    long generatedId = 0;</span>
+
+<span class="nc" id="L41">    try (PreparedStatement preparedStatement =</span>
+<span class="nc" id="L42">        this.conn.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {</span>
+<span class="nc" id="L43">      preparedStatement.setString(1, name);</span>
+<span class="nc" id="L44">      preparedStatement.executeUpdate();</span>
+
+<span class="nc" id="L46">      generatedId = getGeneratedId(preparedStatement);</span>
+<span class="nc" id="L47">    } catch (SQLException e) {</span>
+<span class="nc" id="L48">      log.error(&quot;An error occurred while adding the user in the database.{}&quot;, e);</span>
+<span class="nc" id="L49">    }</span>
+<span class="nc" id="L50">    return UserBuild.builder().id(Optional.of(generatedId)).name(name).build();</span>
+  }
+
+  /**
+   * Read the variables of a properties file to create a Connection Object.
+   *
+   * @param file name of the properties file who got the variables to connect at database.
+   * @return a Connection Object.
+   */
+  public static Connection getConnection(final String file) {
+<span class="nc" id="L60">    final Config config = Config.getConfig();</span>
+<span class="nc" id="L61">    Connection conn = null;</span>
+    try {
+<span class="nc" id="L63">      config.getProperties(file);</span>
+<span class="nc" id="L64">      conn =</span>
+<span class="nc" id="L65">          DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());</span>
+<span class="nc" id="L66">    } catch (SQLException e) {</span>
+<span class="nc" id="L67">      log.error(&quot;An error occurred while creating a connection with database.{}&quot;, e);</span>
+<span class="nc" id="L68">    }</span>
+<span class="nc" id="L69">    return conn;</span>
+  }
+
+  /**
+   * Use a PreparedStatement Object to find the id of the last name added at the database.
+   *
+   * @param prep a PreparedStatement Object created by a Connection.
+   * @return the id of the last name added to database.
+   */
+  public long getGeneratedId(final PreparedStatement prep) {
+<span class="nc" id="L79">    long lastId = 0;</span>
+    try {
+<span class="nc" id="L81">      final ResultSet generatedKeys = prep.getGeneratedKeys();</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">      if (generatedKeys.next()) {</span>
+<span class="nc" id="L83">        lastId = generatedKeys.getInt(1);</span>
+      }
+<span class="nc" id="L85">    } catch (SQLException e) {</span>
+<span class="nc" id="L86">      log.error(&quot;An error occurred while find the last id.{}&quot;, e);</span>
+<span class="nc" id="L87">    }</span>
+
+<span class="nc" id="L89">    return lastId;</span>
+  }
+
+  public void verifyUserCreation(final long id) {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">    if (id == 0) {</span>
+<span class="nc" id="L94">      log.error(&quot;Failed to save name to database.&quot;);</span>
+    } else {
+<span class="nc" id="L96">      log.debug(&quot;Name added successfully with ID = {}&quot;, id);</span>
+    }
+<span class="nc" id="L98">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
