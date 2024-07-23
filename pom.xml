@@ -106,10 +106,6 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.12</version>
                 <configuration>
-                    <excludes>
-                        <exclude>**/*Test.class</exclude>
-                        <exclude>**/*TestCase.class</exclude>
-                    </excludes>
                     <rules>
                         <rule>
                             <classfiles>**/*.class</classfiles>
@@ -123,6 +119,12 @@
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
                             <goal>report</goal>
                         </goals>
                     </execution>
