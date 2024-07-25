@@ -1,8 +1,8 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-com.nemesis.training,com.nemesis.training,Main,48,0,2,0,17,0,5,0,4,0
-com.nemesis.training,com.nemesis.training,NameValidator,30,0,8,0,5,0,5,0,1,0
-com.nemesis.training,com.nemesis.training,User,9,0,0,0,4,0,1,0,1,0
-com.nemesis.training,com.nemesis.training,UsersStore,120,0,4,0,42,0,9,0,7,0
-com.nemesis.training,com.nemesis.training,UserBuild,26,0,0,0,6,0,4,0,4,0
-com.nemesis.training,com.nemesis.training,Config,46,0,4,0,15,0,8,0,6,0
-com.nemesis.training,com.nemesis.training,Config.ConfigHelper,5,0,0,0,1,0,1,0,1,0
+com.nemesis.training,com.nemesis.training,Main,0,48,0,2,0,17,0,5,0,4
+com.nemesis.training,com.nemesis.training,NameValidator,0,30,1,7,0,5,1,4,0,1
+com.nemesis.training,com.nemesis.training,User,0,9,0,0,0,4,0,1,0,1
+com.nemesis.training,com.nemesis.training,UsersStore,4,116,1,3,1,41,1,8,0,7
+com.nemesis.training,com.nemesis.training,UserBuild,0,26,0,0,0,6,0,4,0,4
+com.nemesis.training,com.nemesis.training,Config,5,41,0,4,2,13,0,8,0,6
+com.nemesis.training,com.nemesis.training,Config.ConfigHelper,0,5,0,0,0,1,0,1,0,1

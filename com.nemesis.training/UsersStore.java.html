@@ -5,7 +5,7 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 
 /** Class responsible for database operations. */
-<span class="nc" id="L8">@Slf4j</span>
+<span class="fc" id="L8">@Slf4j</span>
 public class UsersStore {
   private final Connection conn;
   public static final String INSERT_QUERY = &quot;INSERT INTO USERS (name) VALUES (?)&quot;;
@@ -14,19 +14,19 @@ public class UsersStore {
           + &quot;id LONG AUTO_INCREMENT, &quot;
           + &quot;name VARCHAR(255) NOT NULL)&quot;;
 
-<span class="nc" id="L17">  protected UsersStore(final Connection connection) {</span>
-<span class="nc" id="L18">    this.conn = connection;</span>
-<span class="nc" id="L19">    this.createTable();</span>
-<span class="nc" id="L20">  }</span>
+<span class="fc" id="L17">  protected UsersStore(final Connection connection) {</span>
+<span class="fc" id="L18">    this.conn = connection;</span>
+<span class="fc" id="L19">    this.createTable();</span>
+<span class="fc" id="L20">  }</span>
 
   /** Executes a CREATE TABLE query, but only if the table doesn't exist yet. */
   private void createTable() {
-<span class="nc" id="L24">    try (Statement stmt = this.conn.createStatement()) {</span>
-<span class="nc" id="L25">      stmt.execute(CREATE_TABLE_QUERY);</span>
-<span class="nc" id="L26">    } catch (SQLException e) {</span>
-<span class="nc" id="L27">      log.error(&quot;An error occurred while creating the table in the database.{}&quot;, e);</span>
-<span class="nc" id="L28">    }</span>
-<span class="nc" id="L29">  }</span>
+<span class="fc" id="L24">    try (Statement stmt = this.conn.createStatement()) {</span>
+<span class="fc" id="L25">      stmt.execute(CREATE_TABLE_QUERY);</span>
+<span class="fc" id="L26">    } catch (SQLException e) {</span>
+<span class="fc" id="L27">      log.error(&quot;An error occurred while creating the table in the database.{}&quot;, e);</span>
+<span class="fc" id="L28">    }</span>
+<span class="fc" id="L29">  }</span>
 
   /**
    * Uses an SQL query to insert a username string into the previously created table.
@@ -36,18 +36,18 @@ public class UsersStore {
    */
   public User createUser(final String name) {
 
-<span class="nc" id="L39">    long generatedId = 0;</span>
+<span class="fc" id="L39">    long generatedId = 0;</span>
 
-<span class="nc" id="L41">    try (PreparedStatement preparedStatement =</span>
-<span class="nc" id="L42">        this.conn.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {</span>
-<span class="nc" id="L43">      preparedStatement.setString(1, name);</span>
-<span class="nc" id="L44">      preparedStatement.executeUpdate();</span>
+<span class="fc" id="L41">    try (PreparedStatement preparedStatement =</span>
+<span class="fc" id="L42">        this.conn.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {</span>
+<span class="fc" id="L43">      preparedStatement.setString(1, name);</span>
+<span class="fc" id="L44">      preparedStatement.executeUpdate();</span>
 
-<span class="nc" id="L46">      generatedId = getGeneratedId(preparedStatement);</span>
-<span class="nc" id="L47">    } catch (SQLException e) {</span>
-<span class="nc" id="L48">      log.error(&quot;An error occurred while adding the user in the database.{}&quot;, e);</span>
-<span class="nc" id="L49">    }</span>
-<span class="nc" id="L50">    return UserBuild.builder().id(Optional.of(generatedId)).name(name).build();</span>
+<span class="fc" id="L46">      generatedId = getGeneratedId(preparedStatement);</span>
+<span class="fc" id="L47">    } catch (SQLException e) {</span>
+<span class="fc" id="L48">      log.error(&quot;An error occurred while adding the user in the database.{}&quot;, e);</span>
+<span class="fc" id="L49">    }</span>
+<span class="fc" id="L50">    return UserBuild.builder().id(Optional.of(generatedId)).name(name).build();</span>
   }
 
   /**
@@ -57,16 +57,16 @@ public class UsersStore {
    * @return a Connection Object.
    */
   public static Connection getConnection(final String file) {
-<span class="nc" id="L60">    final Config config = Config.getConfig();</span>
-<span class="nc" id="L61">    Connection conn = null;</span>
+<span class="fc" id="L60">    final Config config = Config.getConfig();</span>
+<span class="fc" id="L61">    Connection conn = null;</span>
     try {
-<span class="nc" id="L63">      config.getProperties(file);</span>
-<span class="nc" id="L64">      conn =</span>
-<span class="nc" id="L65">          DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());</span>
-<span class="nc" id="L66">    } catch (SQLException e) {</span>
-<span class="nc" id="L67">      log.error(&quot;An error occurred while creating a connection with database.{}&quot;, e);</span>
-<span class="nc" id="L68">    }</span>
-<span class="nc" id="L69">    return conn;</span>
+<span class="fc" id="L63">      config.getProperties(file);</span>
+<span class="fc" id="L64">      conn =</span>
+<span class="fc" id="L65">          DriverManager.getConnection(config.getUrl(), config.getUsername(), config.getPassword());</span>
+<span class="fc" id="L66">    } catch (SQLException e) {</span>
+<span class="fc" id="L67">      log.error(&quot;An error occurred while creating a connection with database.{}&quot;, e);</span>
+<span class="fc" id="L68">    }</span>
+<span class="fc" id="L69">    return conn;</span>
   }
 
   /**
@@ -76,25 +76,25 @@ public class UsersStore {
    * @return the id of the last name added to database.
    */
   public long getGeneratedId(final PreparedStatement prep) {
-<span class="nc" id="L79">    long lastId = 0;</span>
+<span class="fc" id="L79">    long lastId = 0;</span>
     try {
-<span class="nc" id="L81">      final ResultSet generatedKeys = prep.getGeneratedKeys();</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">      if (generatedKeys.next()) {</span>
-<span class="nc" id="L83">        lastId = generatedKeys.getInt(1);</span>
+<span class="fc" id="L81">      final ResultSet generatedKeys = prep.getGeneratedKeys();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">      if (generatedKeys.next()) {</span>
+<span class="fc" id="L83">        lastId = generatedKeys.getInt(1);</span>
       }
-<span class="nc" id="L85">    } catch (SQLException e) {</span>
-<span class="nc" id="L86">      log.error(&quot;An error occurred while find the last id.{}&quot;, e);</span>
-<span class="nc" id="L87">    }</span>
+<span class="fc" id="L85">    } catch (SQLException e) {</span>
+<span class="fc" id="L86">      log.error(&quot;An error occurred while find the last id.{}&quot;, e);</span>
+<span class="fc" id="L87">    }</span>
 
-<span class="nc" id="L89">    return lastId;</span>
+<span class="fc" id="L89">    return lastId;</span>
   }
 
   public void verifyUserCreation(final long id) {
-<span class="nc bnc" id="L93" title="All 2 branches missed.">    if (id == 0) {</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">    if (id == 0) {</span>
 <span class="nc" id="L94">      log.error(&quot;Failed to save name to database.&quot;);</span>
     } else {
-<span class="nc" id="L96">      log.debug(&quot;Name added successfully with ID = {}&quot;, id);</span>
+<span class="fc" id="L96">      log.debug(&quot;Name added successfully with ID = {}&quot;, id);</span>
     }
-<span class="nc" id="L98">  }</span>
+<span class="fc" id="L98">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

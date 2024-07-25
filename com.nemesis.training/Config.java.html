@@ -7,46 +7,46 @@ import java.util.Properties;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-<span class="nc" id="L10">@Slf4j</span>
+<span class="fc" id="L10">@Slf4j</span>
 @NoArgsConstructor
 public final class Config {
   private static Properties properties;
 
   private static final class ConfigHelper {
-<span class="nc" id="L16">    private static final Config INSTANCE = new Config();</span>
+<span class="fc" id="L16">    private static final Config INSTANCE = new Config();</span>
   }
 
   public static Config getConfig() {
-<span class="nc" id="L20">    return ConfigHelper.INSTANCE;</span>
+<span class="fc" id="L20">    return ConfigHelper.INSTANCE;</span>
   }
 
   public String getUrl() {
-<span class="nc" id="L24">    return properties.getProperty(&quot;db.JDBC_URL&quot;);</span>
+<span class="fc" id="L24">    return properties.getProperty(&quot;db.JDBC_URL&quot;);</span>
   }
 
   public String getUsername() {
-<span class="nc" id="L28">    return properties.getProperty(&quot;db.USERNAME&quot;);</span>
+<span class="fc" id="L28">    return properties.getProperty(&quot;db.USERNAME&quot;);</span>
   }
 
   public String getPassword() {
-<span class="nc" id="L32">    return properties.getProperty(&quot;db.PASSWORD&quot;);</span>
+<span class="fc" id="L32">    return properties.getProperty(&quot;db.PASSWORD&quot;);</span>
   }
 
   public Properties getProperties(final String propertiesName) {
-<span class="nc" id="L36">    final Properties prop = new Properties();</span>
-<span class="nc bnc" id="L37" title="All 2 branches missed.">    if (!Objects.equals(propertiesName, &quot;&quot;)) {</span>
+<span class="fc" id="L36">    final Properties prop = new Properties();</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">    if (!Objects.equals(propertiesName, &quot;&quot;)) {</span>
       try (InputStream inputStream =
-<span class="nc" id="L39">          Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {</span>
-<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (inputStream != null) {</span>
-<span class="nc" id="L41">          prop.load(inputStream);</span>
-<span class="nc" id="L42">          properties = prop;</span>
+<span class="fc" id="L39">          Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesName)) {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (inputStream != null) {</span>
+<span class="fc" id="L41">          prop.load(inputStream);</span>
+<span class="fc" id="L42">          properties = prop;</span>
         }
 <span class="nc" id="L44">      } catch (IOException e) {</span>
 <span class="nc" id="L45">        log.error(&quot;An error occurred while loading properties.{}&quot;, e);</span>
-<span class="nc" id="L46">      }</span>
+<span class="fc" id="L46">      }</span>
     }
 
-<span class="nc" id="L49">    return prop;</span>
+<span class="fc" id="L49">    return prop;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

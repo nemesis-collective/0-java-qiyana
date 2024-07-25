@@ -3,28 +3,28 @@
 import java.sql.Connection;
 import lombok.extern.slf4j.Slf4j;
 
-<span class="nc" id="L6">@Slf4j</span>
-<span class="nc" id="L7">public class Main {</span>
+<span class="fc" id="L6">@Slf4j</span>
+<span class="fc" id="L7">public class Main {</span>
   public static void main(final String[] args) {
-<span class="nc" id="L9">    final Main main = new Main();</span>
-<span class="nc" id="L10">    main.run(args);</span>
-<span class="nc" id="L11">  }</span>
+<span class="fc" id="L9">    final Main main = new Main();</span>
+<span class="fc" id="L10">    main.run(args);</span>
+<span class="fc" id="L11">  }</span>
 
   public void run(final String... args) {
     try {
-<span class="nc" id="L15">      final String username = args[0];</span>
-<span class="nc bnc" id="L16" title="All 2 branches missed.">      if (NameValidator.isValidName(username)) {</span>
-<span class="nc" id="L17">        final Connection conn = UsersStore.getConnection(&quot;application.properties&quot;);</span>
-<span class="nc" id="L18">        final UsersStore usersStore = new UsersStore(conn);</span>
-<span class="nc" id="L19">        final User user = usersStore.createUser(username);</span>
-<span class="nc" id="L20">        usersStore.verifyUserCreation(user.getId());</span>
-<span class="nc" id="L21">      } else {</span>
-<span class="nc" id="L22">        log.error(</span>
+<span class="fc" id="L15">      final String username = args[0];</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">      if (NameValidator.isValidName(username)) {</span>
+<span class="fc" id="L17">        final Connection conn = UsersStore.getConnection(&quot;application.properties&quot;);</span>
+<span class="fc" id="L18">        final UsersStore usersStore = new UsersStore(conn);</span>
+<span class="fc" id="L19">        final User user = usersStore.createUser(username);</span>
+<span class="fc" id="L20">        usersStore.verifyUserCreation(user.getId());</span>
+<span class="fc" id="L21">      } else {</span>
+<span class="fc" id="L22">        log.error(</span>
             &quot;Please, write a name with 8 to 25 characters without capital letters or symbols.&quot;);
       }
-<span class="nc" id="L25">    } catch (ArrayIndexOutOfBoundsException e) {</span>
-<span class="nc" id="L26">      log.error(&quot;No names were written.&quot;);</span>
-<span class="nc" id="L27">    }</span>
-<span class="nc" id="L28">  }</span>
+<span class="fc" id="L25">    } catch (ArrayIndexOutOfBoundsException e) {</span>
+<span class="fc" id="L26">      log.error(&quot;No names were written.&quot;);</span>
+<span class="fc" id="L27">    }</span>
+<span class="fc" id="L28">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

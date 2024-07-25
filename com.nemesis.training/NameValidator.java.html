@@ -9,15 +9,15 @@ public final class NameValidator {
 
   public static boolean isValidName(final String name) {
 
-<span class="nc bnc" id="L12" title="All 4 branches missed.">    final boolean isValidLength = name.length() &gt;= 8 &amp;&amp; name.length() &lt;= 25;</span>
+<span class="fc bfc" id="L12" title="All 4 branches covered.">    final boolean isValidLength = name.length() &gt;= 8 &amp;&amp; name.length() &lt;= 25;</span>
 
-<span class="nc" id="L14">    final String regex = &quot;.*[0-9A-Z\\W_].*&quot;;</span>
+<span class="fc" id="L14">    final String regex = &quot;.*[0-9A-Z\\W_].*&quot;;</span>
 
-<span class="nc" id="L16">    final Pattern pattern = Pattern.compile(regex);</span>
+<span class="fc" id="L16">    final Pattern pattern = Pattern.compile(regex);</span>
 
-<span class="nc" id="L18">    final Matcher matcher = pattern.matcher(name);</span>
+<span class="fc" id="L18">    final Matcher matcher = pattern.matcher(name);</span>
 
-<span class="nc bnc" id="L20" title="All 4 branches missed.">    return isValidLength &amp;&amp; !matcher.matches();</span>
+<span class="pc bpc" id="L20" title="1 of 4 branches missed.">    return isValidLength &amp;&amp; !matcher.matches();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

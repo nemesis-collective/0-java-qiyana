@@ -9,21 +9,21 @@ public class UserBuild {
   private String name;
 
   public static UserBuild builder() {
-<span class="nc" id="L12">    return new UserBuild();</span>
+<span class="fc" id="L12">    return new UserBuild();</span>
   }
 
   public UserBuild id(final Optional&lt;Long&gt; id) {
-<span class="nc" id="L16">    this.id = id.orElse(null);</span>
-<span class="nc" id="L17">    return this;</span>
+<span class="fc" id="L16">    this.id = id.orElse(null);</span>
+<span class="fc" id="L17">    return this;</span>
   }
 
   public UserBuild name(final String name) {
-<span class="nc" id="L21">    this.name = name;</span>
-<span class="nc" id="L22">    return this;</span>
+<span class="fc" id="L21">    this.name = name;</span>
+<span class="fc" id="L22">    return this;</span>
   }
 
   public User build() {
-<span class="nc" id="L26">    return new User(id, name);</span>
+<span class="fc" id="L26">    return new User(id, name);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
